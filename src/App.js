@@ -1,25 +1,8 @@
 import { withStyles } from "@material-ui/core/styles";
 import { Box } from "@mui/system";
 import Layout from "layout/Layout";
-import {
-	useCurrentGame,
-	useSettings,
-	editSettings,
-	newGame,
-	addPlayer,
-} from "store/actions";
-import { useDispatch } from "react-redux";
-import Button from "@mui/material/Button";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import { useCurrentGame } from "store/actions";
 import React from "react";
-import NewPlayerModal from "components/NewPlayerModal";
-import { styled } from "@mui/system";
-import { secondTitle } from "styles/styles";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
 import NewGame from "components/NewGame";
 import Game from "components/Game";
 

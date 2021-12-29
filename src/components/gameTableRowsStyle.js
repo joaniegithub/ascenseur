@@ -1,3 +1,5 @@
+import { styled } from "@mui/system";
+
 export const colors = [
 	"#005d5d",
 	"#FF7043",
@@ -13,48 +15,99 @@ export const colors = [
 	"#efb4cd",
 ];
 
-const styleCell = {
-	// width: "32px",
-	maxWidth: "44px",
+// export const StyledInputElement = styled("td", props)`
+// 	${cssCustomInputOutput}
+// `;
+
+const baseCell = {
 	minWidth: "44px",
 	textAlign: "center",
 	boxSizing: "border-box",
 	width: "100%",
 	verticalAlign: "middle",
-	borderBottom: "1px solid #ddd",
-	// borderLeft: "1px solid #ddd",
-	// boxSizing: "border-box",
-	// display: "flex",
-	// flexDirection: "row",
-	// justifyContent: "flex-start",
 };
-const styleHeaderCell = {
-	...styleCell,
-	padding: "6px 10px",
-	fontWeight: "bold",
+
+const getStyledTableCellProperties = ({
+	isHeader,
+	isFooter,
+	isFirst,
+	isLast,
+	isFirstScoreCol,
+	isEven,
+	isCurrent,
+	isExpanded,
+}) => {
+	let bgColor = "#fff";
+	if (isCurrent) {
+		bgColor = "#cdcdcd";
+	} else if (isHeader || isFooter) {
+		bgColor = "#eaeaea";
+	} else if (isFirst || isLast) {
+		bgColor = isEven ? "#fafafa" : "#f2f2f2";
+	} else {
+		bgColor = isEven ? "#ffffff" : "#fafafa";
+	}
+	return {
+		...baseCell,
+		maxWidth:
+			isFirst || (isExpanded && isLast)
+				? "100px"
+				: isLast
+				? "60px"
+				: "44px",
+
+		...(!isFooter && {
+			borderBottom: "1px solid #ddd",
+		}),
+		// ...(isCurrent && {
+		// 	borderLeft: "1px solid #ddd",
+		// 	borderRight: "1px solid #ddd",
+		// }),
+		...(!isFirstScoreCol &&
+			!isFirst &&
+			!isLast && {
+				borderLeft: "1px solid #ddd",
+			}),
+		...(isFirst && {
+			borderRight: "3px solid #ddd",
+		}),
+		...(isLast && {
+			borderLeft: "3px solid #ddd",
+		}),
+		...((isHeader || isFooter || isFirst || isLast) && {
+			fontWeight: 600,
+		}),
+
+		padding: isLast
+			? "0 4px"
+			: isHeader || isFooter || isFirst
+			? "6px 10px"
+			: "0",
+		position: isFirst || isLast ? "sticky" : "relative",
+		zIndex: isFirst || isLast ? 2 : 1,
+		left: isFirst ? 0 : "initial",
+		right: isLast ? 0 : "initial",
+		textAlign: isFirst ? "left" : "center",
+		backgroundColor: bgColor,
+	};
 };
-const styleStickyCell = {
-	...styleCell,
-	padding: "6px 10px",
-	position: "sticky",
-	zIndex: 2,
-	fontWeight: "bold",
-	// border: "1px solid #bbb",
-};
-const styleFirstColCell = {
-	...styleStickyCell,
-	maxWidth: "100px",
-	left: 0,
-	textAlign: "left",
-};
-const styleLastColCell = {
-	...styleStickyCell,
-	maxWidth: "60px",
-	minWidth: "60px",
-	padding: "0 4px",
-	right: 0,
-	textAlign: "center",
-};
+
+const shouldFowardPropFunction = (prop) =>
+	prop !== "isHeader" &&
+	prop !== "isFooter" &&
+	prop !== "isFirst" &&
+	prop !== "isLast" &&
+	prop !== "isFirstScoreCol" &&
+	prop !== "isEven" &&
+	prop !== "isCurrent" &&
+	prop !== "isExpanded";
+
+export const StyledTh = styled("th", {
+	shouldForwardProp: shouldFowardPropFunction,
+})(getStyledTableCellProperties);
+export const StyledTd = styled("td", {
+	shouldForwardProp: shouldFowardPropFunction,
+})(getStyledTableCellProperties);
 
 export const gameTableRowsStyles = () => ({
 	gameContainer: {
@@ -78,101 +131,11 @@ export const gameTableRowsStyles = () => ({
 	table: {
 		position: "relative",
 		borderCollapse: "separate" /* Don't collapse */,
+		paddingBottom: "12px",
 	},
 	tableRow: {
 		position: "relative",
 		height: "64px",
-	},
-	headerTableCell: {
-		...styleHeaderCell,
-		borderTop: "1px solid #ddd",
-		// borderLeft: "1px solid #ddd",
-		backgroundColor: "#eaeaea",
-	},
-	footerTableCell: {
-		...styleHeaderCell,
-		borderbottom: "1px solid #ddd",
-		// borderLeft: "1px solid #ddd",
-		backgroundColor: "#eaeaea",
-	},
-	firstColTableCell: {
-		...styleFirstColCell,
-		backgroundColor: "#fafafa",
-
-		"&::after": {
-			content: "o",
-			width: "2px",
-			height: "100%",
-			position: "absolute",
-			backgroundColor: "#bbb",
-		},
-	},
-	firstColTableCellEven: {
-		...styleFirstColCell,
-		backgroundColor: "#f2f2f2",
-	},
-	firstColTableCellHeader: {
-		...styleFirstColCell,
-		backgroundColor: "#f2f2f2",
-		borderTop: "1px solid #ddd",
-	},
-	firstColTableCellFooter: {
-		...styleFirstColCell,
-		backgroundColor: "#f2f2f2",
-		borderBottom: "1px solid #ddd",
-	},
-	tableCell: {
-		...styleCell,
-		position: "relative",
-		backgroundColor: "#ffffff",
-	},
-	tableCellEven: {
-		...styleCell,
-		position: "relative",
-		backgroundColor: "#fafafa",
-	},
-	tableCellCurrent: {
-		...styleCell,
-		position: "relative",
-		borderLeft: "1px solid #ddd",
-		borderRight: "1px solid #ddd",
-		backgroundColor: "#ffffff",
-	},
-	tableCellEvenCurrent: {
-		...styleCell,
-		position: "relative",
-		borderLeft: "1px solid #ddd",
-		borderRight: "1px solid #ddd",
-		backgroundColor: "#fafafa",
-	},
-	lastColTableCell: {
-		...styleLastColCell,
-		backgroundColor: "#fafafa",
-	},
-	lastColTableCellEven: {
-		...styleLastColCell,
-		backgroundColor: "#f2f2f2",
-	},
-	lastColTableCellHeader: {
-		...styleLastColCell,
-		backgroundColor: "#f2f2f2",
-		borderTop: "1px solid #ddd",
-	},
-	lastColTableCellFooter: {
-		...styleLastColCell,
-		backgroundColor: "#f2f2f2",
-		borderBottom: "1px solid #ddd",
-		fontSize: "12px",
-	},
-	lastColTableCellExpanded: {
-		...styleLastColCell,
-		backgroundColor: "#fafafa",
-		maxWidth: "100px",
-	},
-	lastColTableCellExpandedEven: {
-		...styleLastColCell,
-		backgroundColor: "#f2f2f2",
-		maxWidth: "100px",
 	},
 
 	currentVal: {
@@ -200,10 +163,17 @@ export const gameTableRowsStyles = () => ({
 		fontSize: "12px",
 	},
 	scoreTrickBet: {
-		color: "#222",
+		color: "#000",
 		fontSize: "12px",
 		padding: "4px 6px",
 		fontWeight: "500",
+	},
+	scoreTrickBetMissed: {
+		color: "#444",
+		fontSize: "12px",
+		padding: "4px 6px",
+		fontWeight: "500",
+		textDecoration: "line-through",
 	},
 	scoreTrickResult: {
 		color: "#000",
@@ -212,7 +182,7 @@ export const gameTableRowsStyles = () => ({
 		fontWeight: "500",
 	},
 	scoreTrickResultMissed: {
-		color: "#c70037",
+		color: "#888",
 		fontSize: "12px",
 		padding: "4px 6px",
 		fontWeight: "500",
@@ -220,13 +190,13 @@ export const gameTableRowsStyles = () => ({
 	scoreResult: {
 		color: "#000",
 		fontSize: "18px",
-		fontWeight: "bold",
+		fontWeight: 600,
 		padding: "6px 6px",
 	},
 	scoreResultMissed: {
 		color: "#c70037",
 		fontSize: "18px",
-		fontWeight: "bold",
+		fontWeight: 600,
 		padding: "6px 6px",
 	},
 
@@ -234,5 +204,18 @@ export const gameTableRowsStyles = () => ({
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "flex-end",
+		padding: "0 12px",
+	},
+	betTrickTotalLabel: {
+		color: "#888",
+		fontWeight: 500,
+		// fontSize: "14px",
+		padding: "0",
+	},
+	betTrickTTotalValue: {
+		// color: "#888",
+		// fontWeight: 500,
+		// fontSize: "14px",
+		padding: "6px 0",
 	},
 });

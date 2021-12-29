@@ -13,8 +13,9 @@ import { Button } from "@mui/material";
 import { IconButton } from "@mui/material";
 import { getGameCanGoNext, getGameTotalBetOrTricks } from "store/selector";
 import GameTableRows from "./GameTableRows";
-import { gameTableRowsStyles } from "./gameTableRowsStyle";
+import { gameTableRowsStyles, StyledTd, StyledTh } from "./gameTableRowsStyle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Ascenseur from "./Ascenseur";
 
 const styles = gameTableRowsStyles;
 
@@ -57,36 +58,45 @@ const Game = (props) => {
 	};
 
 	const isBetPhase = game.currentPhase === 0;
+	const isPostBetPhase = game.currentPhase === 1;
 	const isTricksPhase = game.currentPhase === 2;
 	const btnNextDisabled = !getGameCanGoNext(game);
 	const totalBetOrTricks = getGameTotalBetOrTricks(game);
 
 	return (
 		<div className={classes.gameContainer}>
+			<Ascenseur />
 			<div className={classes.tableContainer}>
 				<table className={classes.table}>
 					<thead>
-						<tr className={classes.tableRow}>
-							<th
-								className={classes.firstColTableCellHeader}
+						<tr>
+							<StyledTh
+								isHeader={true}
+								isFirst={true}
 								key={"row_0_col_0"}
-							></th>
+							></StyledTh>
 							{game.turnNumbers.map((turnNumber, i) => {
+								if (i > game.currentTurn) {
+									return;
+								}
 								return (
-									<th
-										className={classes.headerTableCell}
+									<StyledTh
+										isHeader={true}
+										isFirstScoreCol={i === 0}
+										isCurrent={i === game.currentTurn}
 										key={"row_0_col_" + i}
 									>
 										{turnNumber}
-									</th>
+									</StyledTh>
 								);
 							})}
-							<th
-								className={classes.lastColTableCellHeader}
+							<StyledTh
+								isHeader={true}
+								isLast={true}
 								key={"row_0_col_last"}
 							>
 								{game.turnNumbers[game.currentTurn]}
-							</th>
+							</StyledTh>
 						</tr>
 					</thead>
 					<tbody>
@@ -94,63 +104,76 @@ const Game = (props) => {
 					</tbody>
 					<tfoot>
 						<tr className={classes.tableRow}>
-							<th
-								className={classes.firstColTableCellFooter}
+							<StyledTd
+								isFooter={true}
+								isFirst={true}
 								key={"row_last_col_0"}
-							></th>
+							></StyledTd>
 							{game.turnNumbers.map((turnNumber, i) => {
+								if (i > game.currentTurn) {
+									return;
+								}
 								return (
-									<th
-										className={classes.footerTableCell}
+									<StyledTd
+										isFooter={true}
+										isFirstScoreCol={i === 0}
+										isCurrent={i === game.currentTurn}
 										key={"row_last_col_" + i}
 									>
-										--
-									</th>
+										-
+									</StyledTd>
 								);
 							})}
-							<th
-								className={classes.lastColTableCellFooter}
+							<StyledTd
+								isFooter={true}
+								isLast={true}
 								key={"row_last_col_last"}
 							>
-								{isBetPhase
-									? "Paris: " + totalBetOrTricks
-									: isTricksPhase
-									? "Levées: " + totalBetOrTricks
-									: ""}
-								{isBetPhase || isTricksPhase ? (
-									<IconButton
-										onClick={handleNext}
-										disabled={btnNextDisabled}
-									>
-										<CheckCircleIcon
-											color={
-												btnNextDisabled
-													? "disabled"
-													: "primary"
+								{(isBetPhase || isTricksPhase) && (
+									<div className={classes.wrapperCellData}>
+										<span
+											className={
+												classes.betTrickTotalLabel
 											}
-											sx={{ fontSize: 28 }}
-										/>
-									</IconButton>
-								) : (
-									<IconButton
-										variant="contained"
-										color={
-											btnNextDisabled
-												? "disabled"
-												: "primary"
-										}
-										disabled={btnNextDisabled}
-										onClick={handleNext}
-									>
-										<ArrowCircleRightIcon
-											sx={{ fontSize: 36 }}
-										/>
-									</IconButton>
+										>
+											Total:
+										</span>
+										<span
+											className={
+												classes.betTrickTTotalValue
+											}
+										>
+											{totalBetOrTricks}
+										</span>
+									</div>
 								)}
-							</th>
+							</StyledTd>
 						</tr>
 					</tfoot>
 				</table>
+			</div>
+			<div className={classes.nextStepWrapper}>
+				<Button
+					variant="contained"
+					size="small"
+					disabled={btnNextDisabled}
+					endIcon={
+						isBetPhase || isTricksPhase ? (
+							<CheckCircleIcon />
+						) : (
+							ArrowCircleRightIcon
+						)
+					}
+					onClick={handleNext}
+				>
+					{isBetPhase
+						? "Confirmer les paris"
+						: isPostBetPhase
+						? "Fin de ronde"
+						: isTricksPhase
+						? "Confirmer les levées remportées"
+						: "Tour suivant"}
+				</Button>
 			</div>
 		</div>
 	);

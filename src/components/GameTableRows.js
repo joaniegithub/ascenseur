@@ -3,7 +3,7 @@ import { useCurrentGame, gameSetBet, gameSetTricks } from "store/actions";
 import { useDispatch } from "react-redux";
 import React from "react";
 import NumSelector from "./NumSelector";
-import { colors, gameTableRowsStyles } from "./gameTableRowsStyle";
+import { colors, gameTableRowsStyles, StyledTd } from "./gameTableRowsStyle";
 
 const styles = gameTableRowsStyles;
 
@@ -17,29 +17,6 @@ const GameTableRows = (props) => {
 	// const settings = useSettings();
 	const game = useCurrentGame();
 	const dispatch = useDispatch();
-
-	const getClss = (index, col = "", phase = 0, isCurrentTurnCol = false) => {
-		if (col === "first") {
-			return index % 2 === 1
-				? classes.firstColTableCellEven
-				: classes.firstColTableCell;
-		} else if (col === "last") {
-			return index % 2 === 1
-				? phase === 0 || phase === 2
-					? classes.lastColTableCellExpandedEven
-					: classes.lastColTableCellEven
-				: phase === 0 || phase === 2
-				? classes.lastColTableCellExpanded
-				: classes.lastColTableCell;
-		}
-		return index % 2 === 1
-			? isCurrentTurnCol
-				? classes.tableCellEvenCurrent
-				: classes.tableCellEven
-			: isCurrentTurnCol
-			? classes.tableCellCurrent
-			: classes.tableCell;
-	};
 
 	// Change Bet
 	const handlePlayerBetChange = (player, bet) => {
@@ -63,19 +40,28 @@ const GameTableRows = (props) => {
 		confirmedTurnScore,
 		currentTurn
 	) => {
+		const done = confirmedTurnScore !== "...";
 		const missed = confirmedTurnBet !== confirmedTurnTrick;
 		return (
-			<td
-				className={getClss(indexRow, "", 0, indexCol === currentTurn)}
+			<StyledTd
+				isEven={indexRow % 2 == 0}
+				isFirstScoreCol={indexCol === 0}
+				isCurrent={indexCol === currentTurn}
 				key={"row_" + (indexRow + 1) + "_col_" + indexCol}
-				// color={btnNextDisabled ? "disabled" : "primary"}
-				style={{ backgroundColor: colors[Math.random() * 10] }}
 			>
 				<div className={classes.wrapperCellData}>
 					<span className={classes.scoreTrickData}>
-						<span className={classes.scoreTrickBet}>
-							{confirmedTurnBet}
-						</span>
+						{(missed || indexCol === currentTurn) && (
+							<span
+								className={
+									missed && done
+										? classes.scoreTrickBetMissed
+										: classes.scoreTrickBet
+								}
+							>
+								{confirmedTurnBet}
+							</span>
+						)}
 						<span
 							className={
 								missed
@@ -96,7 +82,7 @@ const GameTableRows = (props) => {
 						{confirmedTurnScore}
 					</span>
 				</div>
-			</td>
+			</StyledTd>
 		);
 	};
 
@@ -127,10 +113,13 @@ const GameTableRows = (props) => {
 
 					return (
 						<tr className={classes.tableRow} key={"row_" + index}>
-							<td className={getClss(index, "first")}>
+							<StyledTd isFirst={true} isEven={index % 2 == 0}>
 								{player.name}
-							</td>
+							</StyledTd>
 							{game.turnNumbers.map((turnNumber, i) => {
+								if (i > game.currentTurn) {
+									return;
+								}
 								const turnBet = player.bets[i];
 								const confirmedTurnBet =
 									(game.currentPhase >= 1 &&
@@ -164,12 +153,13 @@ const GameTableRows = (props) => {
 									game.currentTurn
 								);
 							})}
-							<td
-								className={getClss(
-									index,
-									"last",
-									game.currentPhase
-								)}
+							<StyledTd
+								isLast={true}
+								isEven={index % 2 === 0}
+								isExpanded={
+									game.currentPhase === 0 ||
+									game.currentPhase === 2
+								}
 							>
 								<span className={classes.currentVal}>
 									{currentVal}
@@ -185,7 +175,7 @@ const GameTableRows = (props) => {
 										index={index}
 									/>
 								)}
-							</td>
+							</StyledTd>
 						</tr>
 					);
 				})}
