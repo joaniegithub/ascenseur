@@ -15,18 +15,46 @@ export const colors = [
 	"#efb4cd",
 ];
 
-// export const StyledInputElement = styled("td", props)`
-// 	${cssCustomInputOutput}
-// `;
+const getStyledTableRowProperties = ({
+	isHeader,
+	isFooter,
+	isEven,
+	isWinner,
+}) => {
+	let bgColor = "#fff";
+	if (isHeader || isFooter) {
+		bgColor = "#eaeaea";
+	} else if (isWinner) {
+		bgColor = "#bbd6d9";
+	} else {
+		bgColor = isEven ? "#ffffff" : "#fafafa";
+	}
+	return {
+		position: "relative",
+		height: "48px",
+		width: "100%",
+		...(!isFooter && {
+			borderBottom: "1px solid #ddd",
+		}),
+		backgroundColor: bgColor,
+	};
+};
+const shouldFowardPropTrFunction = (prop) =>
+	prop !== "isHeader" &&
+	prop !== "isFooter" &&
+	prop !== "isEven" &&
+	prop !== "isWinner";
+export const StyledTr = styled("tr", {
+	shouldForwardProp: shouldFowardPropTrFunction,
+})(getStyledTableRowProperties);
 
 const baseCell = {
 	minWidth: "44px",
 	textAlign: "center",
 	boxSizing: "border-box",
-	width: "100%",
 	verticalAlign: "middle",
+	height: "100%",
 };
-
 const getStyledTableCellProperties = ({
 	isHeader,
 	isFooter,
@@ -34,35 +62,29 @@ const getStyledTableCellProperties = ({
 	isLast,
 	isFirstScoreCol,
 	isEven,
-	isCurrent,
-	isExpanded,
+	isWinner,
 }) => {
-	let bgColor = "#fff";
-	if (isCurrent) {
-		bgColor = "#cdcdcd";
+	let bgColor = "transparent";
+	if (isWinner) {
+		bgColor = "#bbd6d9";
 	} else if (isHeader || isFooter) {
 		bgColor = "#eaeaea";
 	} else if (isFirst || isLast) {
 		bgColor = isEven ? "#fafafa" : "#f2f2f2";
-	} else {
-		bgColor = isEven ? "#ffffff" : "#fafafa";
+	}
+	let maxWidth = "44px";
+	if (isFirst) {
+		maxWidth = "100px";
+	} else if (isLast) {
+		maxWidth = "initial";
 	}
 	return {
 		...baseCell,
-		maxWidth:
-			isFirst || (isExpanded && isLast)
-				? "100px"
-				: isLast
-				? "60px"
-				: "44px",
-
-		...(!isFooter && {
-			borderBottom: "1px solid #ddd",
+		maxWidth,
+		...(isLast && {
+			width: "100%",
 		}),
-		// ...(isCurrent && {
-		// 	borderLeft: "1px solid #ddd",
-		// 	borderRight: "1px solid #ddd",
-		// }),
+
 		...(!isFirstScoreCol &&
 			!isFirst &&
 			!isLast && {
@@ -79,19 +101,18 @@ const getStyledTableCellProperties = ({
 		}),
 
 		padding: isLast
-			? "0 4px"
+			? "0"
 			: isHeader || isFooter || isFirst
 			? "6px 10px"
 			: "0",
 		position: isFirst || isLast ? "sticky" : "relative",
 		zIndex: isFirst || isLast ? 2 : 1,
-		left: isFirst ? 0 : "initial",
-		right: isLast ? 0 : "initial",
+		...(isFirst && { left: 0 }),
+		...(isLast && { right: 0 }),
 		textAlign: isFirst ? "left" : "center",
 		backgroundColor: bgColor,
 	};
 };
-
 const shouldFowardPropFunction = (prop) =>
 	prop !== "isHeader" &&
 	prop !== "isFooter" &&
@@ -99,9 +120,7 @@ const shouldFowardPropFunction = (prop) =>
 	prop !== "isLast" &&
 	prop !== "isFirstScoreCol" &&
 	prop !== "isEven" &&
-	prop !== "isCurrent" &&
-	prop !== "isExpanded";
-
+	prop !== "isWinner";
 export const StyledTh = styled("th", {
 	shouldForwardProp: shouldFowardPropFunction,
 })(getStyledTableCellProperties);
@@ -109,9 +128,49 @@ export const StyledTd = styled("td", {
 	shouldForwardProp: shouldFowardPropFunction,
 })(getStyledTableCellProperties);
 
+const getStyledCellWrapperProperties = ({
+	isCurrent,
+	isHeader,
+	isFooter,
+	isControl,
+	isWrapper,
+	isWinner,
+}) => {
+	let bgColor = "transparent";
+	if (isWinner && isCurrent) {
+		bgColor = "#25a9b5";
+	} else if (isCurrent) {
+		bgColor = "#bbd6d9";
+	}
+	return {
+		display: "flex",
+		flexDirection: isWrapper ? "row" : "column",
+		justifyContent: isWrapper ? "flex-start" : "center",
+		alignItems: "center",
+		height: "100%",
+		minHeight: isHeader || isFooter ? "48px" : "64px",
+		width: isWrapper ? "100%" : isControl ? "110px" : "44px",
+		backgroundColor: bgColor,
+	};
+};
+const shouldFowardPropCellWrapperFunction = (prop) =>
+	prop !== "isHeader" &&
+	prop !== "isFooter" &&
+	prop !== "isCurrent" &&
+	prop !== "isControl" &&
+	prop !== "isWrapper" &&
+	prop !== "isWinner";
+export const StyledDivWrapper = styled("div", {
+	shouldForwardProp: shouldFowardPropCellWrapperFunction,
+})(getStyledCellWrapperProperties);
+
 export const gameTableRowsStyles = () => ({
 	gameContainer: {
 		width: "100%",
+	},
+	gameInfo: {
+		margin: "0 12px 6px",
+		fontSize: "12px",
 	},
 	tableContainer: {
 		display: "flex",
@@ -125,13 +184,13 @@ export const gameTableRowsStyles = () => ({
 		"th, tr, td": {
 			margin: "0",
 			whiteSpace: "nowrap",
-			// borderTopWidth: "0px",
 		},
 	},
 	table: {
 		position: "relative",
 		borderCollapse: "separate" /* Don't collapse */,
 		paddingBottom: "12px",
+		minWidth: "100%",
 	},
 	tableRow: {
 		position: "relative",
@@ -140,20 +199,6 @@ export const gameTableRowsStyles = () => ({
 
 	currentVal: {
 		padding: "6px 6px 2px",
-	},
-
-	wrapperCellData: {
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "center",
-		height: "100%",
-		width: "100%",
-		position: "absolute",
-		top: 0,
-		bottom: 0,
-		left: 0,
-		right: 0,
 	},
 
 	scoreTrickData: {
@@ -209,13 +254,9 @@ export const gameTableRowsStyles = () => ({
 	betTrickTotalLabel: {
 		color: "#888",
 		fontWeight: 500,
-		// fontSize: "14px",
 		padding: "0",
 	},
 	betTrickTTotalValue: {
-		// color: "#888",
-		// fontWeight: 500,
-		// fontSize: "14px",
 		padding: "6px 0",
 	},
 });

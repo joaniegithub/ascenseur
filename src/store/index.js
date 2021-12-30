@@ -19,27 +19,6 @@ function loadFromLocalStorage() {
 		const serialisedState = localStorage.getItem("AscenseurStore");
 		if (serialisedState === null) return undefined;
 		const parsedState = JSON.parse(serialisedState);
-		// const mergedSettings = {
-		// 	...defaultSettings,
-		// 	...parsedState.settings,
-		// };
-		// let reducedOilsData;
-		// if (
-		// 	parsedState.reducedOilsDataIds &&
-		// 	parsedState.reducedOilsDataIds.length
-		// ) {
-		// 	reducedOilsData = oilsData.filter((oil) => {
-		// 		return parsedState.reducedOilsDataIds.includes(oil.id);
-		// 	});
-		// } else {
-		// 	reducedOilsData = [...oilsData];
-		// }
-		// const newState = {
-		// 	...parsedState,
-		// 	settings: mergedSettings,
-		// 	oilsData,
-		// 	reducedOilsData,
-		// };
 		return parsedState;
 	} catch (e) {
 		console.warn(e);

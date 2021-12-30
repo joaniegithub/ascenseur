@@ -37,20 +37,8 @@ export const getGameCanGoNext = (game) => {
 };
 
 export const getGameTotalBetOrTricks = (game) => {
-	// let total = 0;
-	// const newTotal = checkedOils.reduce((a, b) => {
-	// 	return a + (b.percent ? b.percent : 0);
-	// }, 0);
-	console.log(game.currentTurn);
 	const total = game.players.reduce((a, b) => {
-		// if (player[betsOrtricksProp][game.currentTurn] !== undefined) {
 		const betsOrtricksProp = game.currentPhase === 0 ? b.bets : b.tricks;
-		console.log(b.name, betsOrtricksProp[game.currentTurn]);
-		// 	total += player[betsOrtricksProp][game.currentTurn];
-		// 	return false;
-		// }
-		// return true;
-		console.log(betsOrtricksProp);
 		return (
 			a +
 			(betsOrtricksProp[game.currentTurn]

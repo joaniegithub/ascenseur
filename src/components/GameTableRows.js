@@ -3,16 +3,17 @@ import { useCurrentGame, gameSetBet, gameSetTricks } from "store/actions";
 import { useDispatch } from "react-redux";
 import React from "react";
 import NumSelector from "./NumSelector";
-import { colors, gameTableRowsStyles, StyledTd } from "./gameTableRowsStyle";
+import {
+	gameTableRowsStyles,
+	StyledDivWrapper,
+	StyledTd,
+	StyledTr,
+} from "./gameTableRowsStyle";
 
 const styles = gameTableRowsStyles;
 
 const GameTableRows = (props) => {
 	const { classes } = props;
-
-	// const [openNewPlayer, setOpenNewPlayer] = React.useState(false);
-	// const [nbPlayers, setNbPlayers] = React.useState(0);
-	// const [nbTurnsMode, setNbTurnsMode] = React.useState(0);
 
 	// const settings = useSettings();
 	const game = useCurrentGame();
@@ -28,8 +29,29 @@ const GameTableRows = (props) => {
 	};
 
 	const isBetPhase = game.currentPhase === 0;
-	const isPostBetPhase = game.currentPhase === 1;
 	const isTricksPhase = game.currentPhase === 2;
+	const isGameDone =
+		game.currentTurn === game.nbTurns - 1 && game.currentPhase === 3;
+	let highScore = -1;
+	let winners = [];
+	if (isGameDone) {
+		const finalScores = game.players.map((player, i) => {
+			return {
+				playerName: player.name,
+				playerIndex: i,
+				score: player.scores[player.scores.length - 1],
+			};
+		});
+		highScore = Math.max.apply(
+			Math,
+			finalScores.map(function (o) {
+				return o.score;
+			})
+		);
+		winners = finalScores.map((player) => {
+			return player.score === highScore ? highScore : false;
+		});
+	}
 
 	const getCell = (
 		player,
@@ -38,50 +60,82 @@ const GameTableRows = (props) => {
 		confirmedTurnBet,
 		confirmedTurnTrick,
 		confirmedTurnScore,
-		currentTurn
+		currentTurn,
+		isLast,
+		currentVal,
+		isWinner
 	) => {
 		const done = confirmedTurnScore !== "...";
 		const missed = confirmedTurnBet !== confirmedTurnTrick;
-		return (
-			<StyledTd
-				isEven={indexRow % 2 == 0}
-				isFirstScoreCol={indexCol === 0}
+
+		const cellContent = (
+			<StyledDivWrapper
+				isWinner={isWinner}
 				isCurrent={indexCol === currentTurn}
-				key={"row_" + (indexRow + 1) + "_col_" + indexCol}
 			>
-				<div className={classes.wrapperCellData}>
-					<span className={classes.scoreTrickData}>
-						{(missed || indexCol === currentTurn) && (
-							<span
-								className={
-									missed && done
-										? classes.scoreTrickBetMissed
-										: classes.scoreTrickBet
-								}
-							>
-								{confirmedTurnBet}
-							</span>
-						)}
+				<span className={classes.scoreTrickData}>
+					{(missed || indexCol === currentTurn) && (
 						<span
 							className={
-								missed
-									? classes.scoreTrickResultMissed
-									: classes.scoreTrickResult
+								missed && done
+									? classes.scoreTrickBetMissed
+									: classes.scoreTrickBet
 							}
 						>
-							{confirmedTurnTrick}
+							{confirmedTurnBet}
 						</span>
-					</span>
+					)}
 					<span
 						className={
 							missed
-								? classes.scoreResultMissed
-								: classes.scoreResult
+								? classes.scoreTrickResultMissed
+								: classes.scoreTrickResult
 						}
 					>
-						{confirmedTurnScore}
+						{confirmedTurnTrick}
 					</span>
-				</div>
+				</span>
+				<span
+					className={
+						missed && done
+							? classes.scoreResultMissed
+							: classes.scoreResult
+					}
+				>
+					{confirmedTurnScore}
+				</span>
+			</StyledDivWrapper>
+		);
+
+		return (
+			<StyledTd
+				isEven={indexRow % 2 === 0}
+				isFirstScoreCol={indexCol === 0}
+				isCurrent={indexCol === currentTurn}
+				isLast={isLast}
+				isWinner={isWinner}
+				key={"row_" + (indexRow + 1) + "_col_" + indexCol}
+			>
+				{isLast && (isBetPhase || isTricksPhase) ? (
+					<StyledDivWrapper isWrapper={true}>
+						{cellContent}
+
+						<StyledDivWrapper isControl={true}>
+							{(isBetPhase || isTricksPhase) && (
+								<NumSelector
+									value={currentVal}
+									min={0}
+									max={game.turnNumbers[game.currentTurn]}
+									handleUpdateQty={(bet) =>
+										handlePlayerBetChange(player, bet)
+									}
+								/>
+							)}
+						</StyledDivWrapper>
+					</StyledDivWrapper>
+				) : (
+					<React.Fragment>{cellContent}</React.Fragment>
+				)}
 			</StyledTd>
 		);
 	};
@@ -92,10 +146,8 @@ const GameTableRows = (props) => {
 				game.players.map((player, index) => {
 					const currentBet = player.bets[game.currentTurn] || 0;
 					const currentTricks = player.tricks[game.currentTurn] || 0;
-					// const confirmedCurrentBet =
-					// 	game.currentPhase >= 1
-					// 		? currentBet
-					// 		: "-";
+
+					const isWinner = winners[index];
 
 					let currentVal = "";
 					switch (game.currentPhase) {
@@ -112,14 +164,23 @@ const GameTableRows = (props) => {
 					}
 
 					return (
-						<tr className={classes.tableRow} key={"row_" + index}>
-							<StyledTd isFirst={true} isEven={index % 2 == 0}>
+						<StyledTr
+							key={"row_" + index}
+							isEven={index % 2 === 0}
+							isWinner={isWinner}
+						>
+							<StyledTd
+								isFirst={true}
+								isEven={index % 2 === 0}
+								isWinner={isWinner}
+							>
 								{player.name}
 							</StyledTd>
 							{game.turnNumbers.map((turnNumber, i) => {
 								if (i > game.currentTurn) {
-									return;
+									return null;
 								}
+								const isLast = i === game.currentTurn;
 								const turnBet = player.bets[i];
 								const confirmedTurnBet =
 									(game.currentPhase >= 1 &&
@@ -150,33 +211,13 @@ const GameTableRows = (props) => {
 									confirmedTurnBet,
 									confirmedTurnTrick,
 									confirmedTurnScore,
-									game.currentTurn
+									game.currentTurn,
+									isLast,
+									currentVal,
+									isWinner
 								);
 							})}
-							<StyledTd
-								isLast={true}
-								isEven={index % 2 === 0}
-								isExpanded={
-									game.currentPhase === 0 ||
-									game.currentPhase === 2
-								}
-							>
-								<span className={classes.currentVal}>
-									{currentVal}
-								</span>
-								{(isBetPhase || isTricksPhase) && (
-									<NumSelector
-										value={currentVal}
-										min={0}
-										max={game.turnNumbers[game.currentTurn]}
-										handleUpdateQty={(bet) =>
-											handlePlayerBetChange(player, bet)
-										}
-										index={index}
-									/>
-								)}
-							</StyledTd>
-						</tr>
+						</StyledTr>
 					);
 				})}
 		</React.Fragment>

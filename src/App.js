@@ -20,26 +20,6 @@ const AscenseurApp = (props) => {
 
 	const currentGame = useCurrentGame();
 
-	// const getClss = (index) => {
-	// 	return index % 2 === 1 ? classes.rowEven : classes.row;
-	// };
-
-	// React.useEffect(() => {
-	// 	if (
-	// 		currentGame &&
-	// 		currentGame.players &&
-	// 		currentGame.players.length > 0
-	// 	) {
-	// 		setNbPlayers(currentGame.players.length);
-	// 	}
-	// }, [currentGame]);
-
-	// React.useEffect(() => {
-	// 	if (currentGame && currentGame.players) {
-	// 		setNbPlayers(currentGame.players.length);
-	// 	}
-	// }, [nbPlayers]);
-
 	return (
 		<Layout>
 			<Box className={classes.box}>

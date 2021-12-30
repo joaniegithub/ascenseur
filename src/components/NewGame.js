@@ -1,9 +1,7 @@
 import { withStyles } from "@material-ui/core/styles";
-import { Box } from "@mui/system";
 import {
 	useCurrentGame,
-	useSettings,
-	editSettings,
+	// useSettings,
 	newGame,
 	addPlayer,
 	setNbTurns,
@@ -20,6 +18,7 @@ import NewPlayerModal from "components/NewPlayerModal";
 import { secondTitle } from "styles/styles";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import { ONE_WAY, TWO_WAYS } from "store/constants";
 
 const styles = () => ({
 	secondTitle: { ...secondTitle },
@@ -63,15 +62,17 @@ const NewGame = (props) => {
 	const [nbPlayers, setNbPlayers] = React.useState(0);
 	const [nbTurnsMode, setNbTurnsMode] = React.useState(0);
 
-	const nbTurnsOneWay = Math.floor(52 / nbPlayers);
-	const nbTurnsTwoWays = Math.floor(52 / nbPlayers) * 2 - 1;
+	let nbCards = 52 - (52 % nbPlayers);
+
+	const nbTurnsOneWay = Math.floor(nbCards / nbPlayers);
+	const nbTurnsTwoWays = Math.floor(nbCards / nbPlayers) * 2 - 1;
 
 	const getTurnNumbers = (_nbTurns, _nbTurnsMode) => {
 		const turns = [];
 		for (let i = 1; i <= _nbTurns; i++) {
 			turns.push(i);
 		}
-		if (_nbTurnsMode === "twoWay") {
+		if (_nbTurnsMode === TWO_WAYS) {
 			for (let i = _nbTurns - 1; i > 0; i--) {
 				turns.push(i);
 			}
@@ -89,9 +90,9 @@ const NewGame = (props) => {
 		setNbTurnsMode(tmpNbTurnsMode);
 		console.log(tmpNbTurnsMode);
 		const nbTurns =
-			tmpNbTurnsMode === "oneWay" ? nbTurnsOneWay : nbTurnsTwoWays;
+			tmpNbTurnsMode === ONE_WAY ? nbTurnsOneWay : nbTurnsTwoWays;
 		const turnNumbers = getTurnNumbers(nbTurnsOneWay, tmpNbTurnsMode);
-		dispatch(setNbTurns(nbTurns, turnNumbers));
+		dispatch(setNbTurns(nbTurns, tmpNbTurnsMode, turnNumbers, nbCards));
 	};
 
 	const handleCloseNewPlayer = (_playerName) => {
@@ -101,7 +102,7 @@ const NewGame = (props) => {
 		}
 	};
 
-	const settings = useSettings();
+	// const settings = useSettings();
 	const currentGame = useCurrentGame();
 	const dispatch = useDispatch();
 
@@ -111,10 +112,6 @@ const NewGame = (props) => {
 	const handleClickStart = () => {
 		dispatch(startGame());
 	};
-
-	// const getClss = (index) => {
-	// 	return index % 2 === 1 ? classes.rowEven : classes.row;
-	// };
 
 	React.useEffect(() => {
 		if (
@@ -169,10 +166,10 @@ const NewGame = (props) => {
 								exclusive
 								onChange={handleChangeNbTurns}
 							>
-								<ToggleButton value="oneWay">
+								<ToggleButton value={ONE_WAY}>
 									{nbTurnsOneWay}
 								</ToggleButton>
-								<ToggleButton value="twoWay">
+								<ToggleButton value={TWO_WAYS}>
 									{nbTurnsTwoWays}
 								</ToggleButton>
 							</ToggleButtonGroup>

@@ -1,60 +1,39 @@
 import { withStyles } from "@material-ui/core/styles";
-import {
-	useCurrentGame,
-	gameSetBet,
-	gameNext,
-	gameSetTricks,
-} from "store/actions";
+import { useCurrentGame, gameNext, newGame } from "store/actions";
 import { useDispatch } from "react-redux";
 import React from "react";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { Button } from "@mui/material";
-import { IconButton } from "@mui/material";
 import { getGameCanGoNext, getGameTotalBetOrTricks } from "store/selector";
 import GameTableRows from "./GameTableRows";
-import { gameTableRowsStyles, StyledTd, StyledTh } from "./gameTableRowsStyle";
+import {
+	gameTableRowsStyles,
+	StyledTd,
+	StyledTh,
+	StyledTr,
+	StyledDivWrapper,
+} from "./gameTableRowsStyle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Ascenseur from "./Ascenseur";
+import { TWO_WAYS } from "store/constants";
 
 const styles = gameTableRowsStyles;
 
 const Game = (props) => {
 	const { classes } = props;
 
-	// const [openNewPlayer, setOpenNewPlayer] = React.useState(false);
-	// const [nbPlayers, setNbPlayers] = React.useState(0);
-	// const [nbTurnsMode, setNbTurnsMode] = React.useState(0);
-
 	// const settings = useSettings();
 	const game = useCurrentGame();
 	const dispatch = useDispatch();
 
-	// React.useEffect(() => {
-	// 	if (
-	// 		game &&
-	// 		game.players &&
-	// 		game.players.length > 0
-	// 	) {
-	// 		setNbPlayers(game.players.length);
-	// 	}
-	// }, [game]);
-	// console.log(nbTurnsMode);
-
-	// const nbTurnsOneWay = Math.floor(52 / nbPlayers);
-	// const nbTurnsTwoWays = Math.floor(52 / nbPlayers) * 2 - 1;
-
-	// Change Bet
-	const handlePlayerBetChange = (player, bet) => {
-		if (game.currentPhase === 0) {
-			dispatch(gameSetBet(player, bet));
-		} else if (game.currentPhase === 2) {
-			dispatch(gameSetTricks(player, bet));
-		}
-	};
-
 	const handleNext = () => {
 		dispatch(gameNext());
+		setTimeout(function () {
+			document.getElementById("tableContainer").scrollTo(1000, 0);
+		}, 200);
+	};
+	const handleNew = () => {
+		dispatch(newGame());
 	};
 
 	const isBetPhase = game.currentPhase === 0;
@@ -62,119 +41,155 @@ const Game = (props) => {
 	const isTricksPhase = game.currentPhase === 2;
 	const btnNextDisabled = !getGameCanGoNext(game);
 	const totalBetOrTricks = getGameTotalBetOrTricks(game);
+	const isGameDone =
+		game.currentTurn === game.nbTurns - 1 && game.currentPhase === 3;
 
 	return (
 		<div className={classes.gameContainer}>
+			<div className={classes.gameInfo}>
+				{game.players.length} joueurs | {game.nbTurns} tours | Mode{" "}
+				{game.turnsMode === TWO_WAYS ? "aller-retour" : "aller-simple"}{" "}
+				| {game.nbCards} cartes.
+			</div>
 			<Ascenseur />
-			<div className={classes.tableContainer}>
-				<table className={classes.table}>
-					<thead>
-						<tr>
-							<StyledTh
-								isHeader={true}
-								isFirst={true}
-								key={"row_0_col_0"}
-							></StyledTh>
-							{game.turnNumbers.map((turnNumber, i) => {
-								if (i > game.currentTurn) {
-									return;
-								}
-								return (
-									<StyledTh
+
+			<React.Fragment>
+				<div id="tableContainer" className={classes.tableContainer}>
+					<table className={classes.table}>
+						<thead>
+							<StyledTr isHeader={true}>
+								<StyledTh
+									isHeader={true}
+									isFirst={true}
+									key={"row_0_col_0"}
+								></StyledTh>
+								{game.turnNumbers.map((turnNumber, i) => {
+									if (i >= game.currentTurn) {
+										return null;
+									}
+									return (
+										<StyledTh
+											isHeader={true}
+											isFirstScoreCol={i === 0}
+											key={"row_0_col_" + i}
+										>
+											{turnNumber}
+										</StyledTh>
+									);
+								})}
+								<StyledTh
+									isHeader={true}
+									isLast={true}
+									key={"row_0_col_last"}
+								>
+									<StyledDivWrapper
+										isCurrent={true}
 										isHeader={true}
-										isFirstScoreCol={i === 0}
-										isCurrent={i === game.currentTurn}
-										key={"row_0_col_" + i}
 									>
-										{turnNumber}
-									</StyledTh>
-								);
-							})}
-							<StyledTh
-								isHeader={true}
-								isLast={true}
-								key={"row_0_col_last"}
-							>
-								{game.turnNumbers[game.currentTurn]}
-							</StyledTh>
-						</tr>
-					</thead>
-					<tbody>
-						<GameTableRows />
-					</tbody>
-					<tfoot>
-						<tr className={classes.tableRow}>
-							<StyledTd
-								isFooter={true}
-								isFirst={true}
-								key={"row_last_col_0"}
-							></StyledTd>
-							{game.turnNumbers.map((turnNumber, i) => {
-								if (i > game.currentTurn) {
-									return;
-								}
-								return (
-									<StyledTd
+										{game.turnNumbers[game.currentTurn]}
+									</StyledDivWrapper>
+								</StyledTh>
+							</StyledTr>
+						</thead>
+						<tbody>
+							<GameTableRows />
+						</tbody>
+						<tfoot>
+							<StyledTr isFooter={true}>
+								<StyledTd
+									isFooter={true}
+									isFirst={true}
+									key={"row_last_col_0"}
+								></StyledTd>
+								{game.turnNumbers.map((turnNumber, i) => {
+									if (i >= game.currentTurn) {
+										return null;
+									}
+									return (
+										<StyledTd
+											isFooter={true}
+											isFirstScoreCol={i === 0}
+											key={"row_last_col_" + i}
+										>
+											-
+										</StyledTd>
+									);
+								})}
+								<StyledTd
+									isFooter={true}
+									isLast={true}
+									key={"row_last_col_last"}
+								>
+									<StyledDivWrapper
+										isWrapper={true}
 										isFooter={true}
-										isFirstScoreCol={i === 0}
-										isCurrent={i === game.currentTurn}
-										key={"row_last_col_" + i}
 									>
-										-
-									</StyledTd>
-								);
-							})}
-							<StyledTd
-								isFooter={true}
-								isLast={true}
-								key={"row_last_col_last"}
-							>
-								{(isBetPhase || isTricksPhase) && (
-									<div className={classes.wrapperCellData}>
-										<span
-											className={
-												classes.betTrickTotalLabel
-											}
-										>
-											Total:
-										</span>
-										<span
-											className={
-												classes.betTrickTTotalValue
-											}
-										>
-											{totalBetOrTricks}
-										</span>
-									</div>
-								)}
-							</StyledTd>
-						</tr>
-					</tfoot>
-				</table>
-			</div>
-			<div className={classes.nextStepWrapper}>
-				<Button
-					variant="contained"
-					size="small"
-					disabled={btnNextDisabled}
-					endIcon={
-						isBetPhase || isTricksPhase ? (
-							<CheckCircleIcon />
-						) : (
-							ArrowCircleRightIcon
-						)
-					}
-					onClick={handleNext}
-				>
-					{isBetPhase
-						? "Confirmer les paris"
-						: isPostBetPhase
-						? "Fin de ronde"
-						: isTricksPhase
-						? "Confirmer les levées remportées"
-						: "Tour suivant"}
-				</Button>
-			</div>
+										<StyledDivWrapper
+											isCurrent={true}
+											isFooter={true}
+										></StyledDivWrapper>
+										{(isBetPhase || isTricksPhase) && (
+											<StyledDivWrapper
+												isControl={true}
+												isFooter={true}
+											>
+												<span
+													className={
+														classes.betTrickTotalLabel
+													}
+												>
+													Total:
+												</span>
+												<span
+													className={
+														classes.betTrickTTotalValue
+													}
+												>
+													{totalBetOrTricks}
+												</span>
+											</StyledDivWrapper>
+										)}
+									</StyledDivWrapper>
+								</StyledTd>
+							</StyledTr>
+						</tfoot>
+					</table>
+				</div>
+				<div className={classes.nextStepWrapper}>
+					{isGameDone ? (
+						<Button
+							variant="contained"
+							size="small"
+							endIcon={<ArrowCircleRightIcon />}
+							onClick={handleNew}
+						>
+							Nouvelle partie
+						</Button>
+					) : (
+						<Button
+							variant="contained"
+							size="small"
+							disabled={btnNextDisabled}
+							endIcon={
+								isBetPhase || isTricksPhase ? (
+									<CheckCircleIcon />
+								) : (
+									<ArrowCircleRightIcon />
+								)
+							}
+							onClick={handleNext}
+						>
+							{isBetPhase
+								? "Confirmer les paris"
+								: isPostBetPhase
+								? "Fin de ronde"
+								: isTricksPhase
+								? "Confirmer les levées remportées"
+								: "Tour suivant"}
+						</Button>
+					)}
+				</div>
+			</React.Fragment>
 		</div>
 	);
 };

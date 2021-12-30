@@ -1,8 +1,6 @@
 import * as constants from "store/constants";
 
-export const defaultSettings = {
-	// font: "Shadows Into Light",
-};
+export const defaultSettings = {};
 
 const defaultState = {
 	name: "Ascenseur Companion",
@@ -15,10 +13,10 @@ const gameDefaultState = {
 	currentTurn: -1,
 	nbTurns: -1,
 	turnNumbers: [],
+	nbCards: 52,
 };
 
 const reducer = (state = defaultState, { type, ...payload }) => {
-	//action déconstruite = {type, name}
 	// console.log(state, type, payload);
 	const game = state.currentGame;
 
@@ -51,8 +49,8 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 			return {
 				...state,
 				currentGame: {
-					...state.currentGame,
-					players: [...state.currentGame.players, newPlayer],
+					...game,
+					players: [...game.players, newPlayer],
 				},
 			};
 
@@ -60,9 +58,11 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 			return {
 				...state,
 				currentGame: {
-					...state.currentGame,
+					...game,
 					nbTurns: payload.nbTurns,
+					turnsMode: payload.turnsMode,
 					turnNumbers: payload.turnNumbers,
+					nbCards: payload.nbCards,
 				},
 			};
 
@@ -70,7 +70,7 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 			return {
 				...state,
 				currentGame: {
-					...state.currentGame,
+					...game,
 					currentTurn: 0,
 					currentPhase: 0,
 				},
@@ -79,11 +79,21 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 		case constants.GAME_NEXT:
 			const newPhase = (game.currentPhase + 1) % 4;
 			const newTurn =
-				newPhase === 0 ? game.currentTurn + 1 : game.currentTurn; // todo: tester si fin de partie
+				newPhase === 0 ? game.currentTurn + 1 : game.currentTurn;
+			if (newPhase === 0) {
+				game.players.forEach((player) => {
+					player.bets[newTurn] = 0;
+				});
+			}
+			if (newPhase === 2) {
+				game.players.forEach((player) => {
+					player.tricks[newTurn] = 0;
+				});
+			}
 			return {
 				...state,
 				currentGame: {
-					...state.currentGame,
+					...game,
 					currentTurn: newTurn,
 					currentPhase: newPhase,
 				},
@@ -94,7 +104,7 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 			return {
 				...state,
 				currentGame: {
-					...state.currentGame,
+					...game,
 					players: [...game.players],
 				},
 			};
@@ -118,7 +128,7 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 			return {
 				...state,
 				currentGame: {
-					...state.currentGame,
+					...game,
 					players: [...game.players],
 				},
 			};

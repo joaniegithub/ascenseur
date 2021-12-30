@@ -63,6 +63,7 @@ const Ascenseur = (props) => {
 									? classes.currentTurn
 									: classes.turn
 							}
+							key={`turn_${index}`}
 						>
 							{turnNumber}
 						</li>
@@ -78,6 +79,7 @@ const Ascenseur = (props) => {
 									? classes.currentPhase
 									: classes.phase
 							}
+							key={`phase_${index}`}
 						>
 							{phase}
 						</li>

@@ -7,4 +7,6 @@ export const START_GAME = "START_GAME";
 export const GAME_NEXT = "GAME_NEXT";
 export const GAME_SET_BET = "GAME_SET_BET";
 export const GAME_SET_TRICKS = "GAME_SET_TRICKS";
-// export const SAVE_SETTING_PROPERTY_SETTINGS = "SAVE_SETTING_PROPERTY_SETTINGS";
+
+export const ONE_WAY = 1;
+export const TWO_WAYS = 2;

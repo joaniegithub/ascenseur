@@ -29,32 +29,26 @@ const styles = () => ({
 		backgroundColor: "#fff",
 		margin: "0",
 		padding: "0 !important",
+
+		minHeight: "100%",
+		display: "flex",
+		flexDirection: "column",
 	},
 	main: {
 		// margin: "0 16px",
+		flexGrow: 1,
 	},
 });
 
 const Layout = (props) => {
 	const { classes } = props;
-	const [mainClassName, setMainClassName] = React.useState("");
-
-	const handlerBgTileChange = (bgTileIndex) => {
-		setMainClassName(`main main_${images[bgTileIndex]}`);
-	};
-
-	// React.useEffect(() => {
-	// 	setMainClassName(`main main_${images[bgTileIndex]}`);
-	// }, [bgTileIndex]);
 
 	return (
-		<div className={mainClassName}>
-			<Container className={classes.container}>
-				<Header onBgTileChange={handlerBgTileChange} images={images} />
-				<div className={classes.main}>{props.children}</div>
-				<Footer />
-			</Container>
-		</div>
+		<Container className={classes.container} maxWidth="md">
+			<Header images={images} />
+			<div className={classes.main}>{props.children}</div>
+			<Footer />
+		</Container>
 	);
 };
 export default withStyles(styles, { name: "Layout" })(Layout);

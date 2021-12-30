@@ -12,12 +12,6 @@ const styles = () => ({
 	box: {
 		padding: "30px",
 	},
-	// gridItemButtons: {
-	// 	width: "100%",
-	// 	display: "flex",
-	// 	flexDirection: "row",
-	// 	justifyContent: "flex-end",
-	// },
 });
 const NewPlayerModal = (props) => {
 	const { classes, openNewPlayer, onCloseNewPlayer } = props;

@@ -88,3 +88,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+
+
+
+html,
+body {
+	min-height: 100%;
+	overflow: auto;
+}
+body {
+	margin: 0;
+	height: 100vh;
+}
+div#root {
+	height: 100%;
+	overflow: auto;
+}
