@@ -31,7 +31,7 @@ const styles = () => ({
 		padding: "0 !important",
 
 		minHeight: "100%",
-		display: "flex",
+		display: "flex !important",
 		flexDirection: "column",
 	},
 	main: {

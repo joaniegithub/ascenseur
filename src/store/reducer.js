@@ -53,6 +53,33 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 					players: [...game.players, newPlayer],
 				},
 			};
+		case constants.DELETE_PLAYER:
+			const playerDelete = payload.player;
+			const playerDeleteIndex = game.players.indexOf(playerDelete);
+			game.players.splice(playerDeleteIndex, 1);
+			return {
+				...state,
+				currentGame: {
+					...game,
+					players: [...game.players],
+				},
+			};
+		case constants.SWAP_PLAYER:
+			const playerSwap = payload.player;
+			const direction = payload.direction;
+			const playerSwapIndex = game.players.indexOf(playerSwap);
+			const newIndex = playerSwapIndex + direction;
+			console.log(newIndex);
+
+			game.players.splice(playerSwapIndex, 1);
+			game.players.splice(newIndex, 0, playerSwap);
+			return {
+				...state,
+				currentGame: {
+					...game,
+					players: [...game.players],
+				},
+			};
 
 		case constants.SET_NB_TURNS:
 			return {

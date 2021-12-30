@@ -16,11 +16,25 @@ import {
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Ascenseur from "./Ascenseur";
 import { TWO_WAYS } from "store/constants";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const styles = gameTableRowsStyles;
 
 const Game = (props) => {
 	const { classes } = props;
+
+	const [confirmCancelGameOpen, setConfirmCancelGameOpen] =
+		React.useState(false);
+	// Confirm Delete Dialog
+	const handleConfirmCancelGameClose = () => {
+		setConfirmCancelGameOpen(false);
+		dispatch(newGame());
+	};
+	const handleConfirmCancelGameDisagree = () => {
+		setConfirmCancelGameOpen(false);
+	};
 
 	// const settings = useSettings();
 	const game = useCurrentGame();
@@ -34,6 +48,9 @@ const Game = (props) => {
 	};
 	const handleNew = () => {
 		dispatch(newGame());
+	};
+	const handleCancelGame = () => {
+		setConfirmCancelGameOpen(true);
 	};
 
 	const isBetPhase = game.currentPhase === 0;
@@ -166,29 +183,62 @@ const Game = (props) => {
 							Nouvelle partie
 						</Button>
 					) : (
-						<Button
-							variant="contained"
-							size="small"
-							disabled={btnNextDisabled}
-							endIcon={
-								isBetPhase || isTricksPhase ? (
-									<CheckCircleIcon />
-								) : (
-									<ArrowCircleRightIcon />
-								)
-							}
-							onClick={handleNext}
-						>
-							{isBetPhase
-								? "Confirmer les paris"
-								: isPostBetPhase
-								? "Fin de ronde"
-								: isTricksPhase
-								? "Confirmer les levées remportées"
-								: "Tour suivant"}
-						</Button>
+						<React.Fragment>
+							<Button
+								onClick={handleCancelGame}
+								variant="outlined"
+							>
+								Abandonner
+							</Button>
+							<Button
+								variant="contained"
+								size="small"
+								disabled={btnNextDisabled}
+								endIcon={
+									isBetPhase || isTricksPhase ? (
+										<CheckCircleIcon />
+									) : (
+										<ArrowCircleRightIcon />
+									)
+								}
+								onClick={handleNext}
+							>
+								{isBetPhase
+									? "Confirmer les paris"
+									: isPostBetPhase
+									? "Fin de ronde"
+									: isTricksPhase
+									? "Confirmer les levées remportées"
+									: "Tour suivant"}
+							</Button>
+						</React.Fragment>
 					)}
 				</div>
+
+				<Dialog
+					open={confirmCancelGameOpen}
+					onClose={handleConfirmCancelGameClose}
+					aria-labelledby="alert-dialog-title"
+				>
+					<DialogTitle id="alert-dialog-title">
+						{`Abandonner la partie?`}
+					</DialogTitle>
+					<DialogActions>
+						<Button
+							variant="outlined"
+							onClick={handleConfirmCancelGameDisagree}
+						>
+							Non
+						</Button>
+						<Button
+							variant="contained"
+							onClick={handleConfirmCancelGameClose}
+							autoFocus
+						>
+							Oui
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</React.Fragment>
 		</div>
 	);

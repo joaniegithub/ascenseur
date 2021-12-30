@@ -37,6 +37,19 @@ export const addPlayer = (_playerName) => {
 		playerName: _playerName,
 	};
 };
+export const deletePlayer = (_player) => {
+	return {
+		type: constants.DELETE_PLAYER,
+		player: _player,
+	};
+};
+export const swapPlayer = (_player, _direction) => {
+	return {
+		type: constants.SWAP_PLAYER,
+		player: _player,
+		direction: _direction,
+	};
+};
 export const setNbTurns = (_nbTurns, _turnsMode, _turnNumbers, _nbCards) => {
 	return {
 		type: constants.SET_NB_TURNS,

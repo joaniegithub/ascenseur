@@ -1,5 +1,6 @@
 import { withStyles } from "@material-ui/core/styles";
 import { wrapperForAbsolute, mainPadding } from "styles/styles";
+import ElevatorIcon from "@mui/icons-material/Elevator";
 import * as React from "react";
 
 const styles = () => ({
@@ -19,7 +20,8 @@ const styles = () => ({
 		fontSize: "24px",
 		lineHeight: "40px",
 		margin: "0",
-		display: "block",
+		display: "flex",
+		alignItems: "center",
 	},
 });
 
@@ -27,7 +29,16 @@ const Header = (props) => {
 	const { classes } = props;
 	return (
 		<div className={classes.header}>
-			<h1 className={classes.mainTitle}>Ascenseur Companion</h1>
+			<h1 className={classes.mainTitle}>
+				<ElevatorIcon
+					color="primary"
+					sx={{
+						fontSize: 32,
+						marginRight: "4px",
+					}}
+				/>
+				Ascenseur Companion
+			</h1>
 			{/*<div className={classes.bgSwitcherContainer}>
 				<IconButton onClick={handlePreviousBg}>
 					<ArrowBackIosNewIcon />

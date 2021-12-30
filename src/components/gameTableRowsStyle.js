@@ -1,19 +1,20 @@
 import { styled } from "@mui/system";
+import { colors } from "styles/styles";
 
-export const colors = [
-	"#005d5d",
-	"#FF7043",
-	"#33b1ff",
-	"#EC407A",
-	"#f6c85f",
-	"#46d39a",
-	"#8b6ec3",
-	"#a6d177",
-	"#78909C",
-	"#dd0000",
-	"#004cab",
-	"#efb4cd",
-];
+// export const colors = [
+// 	"#005d5d",
+// 	"#FF7043",
+// 	"#33b1ff",
+// 	"#EC407A",
+// 	"#f6c85f",
+// 	"#46d39a",
+// 	"#8b6ec3",
+// 	"#a6d177",
+// 	"#78909C",
+// 	"#dd0000",
+// 	"#004cab",
+// 	"#efb4cd",
+// ];
 
 const getStyledTableRowProperties = ({
 	isHeader,
@@ -25,7 +26,7 @@ const getStyledTableRowProperties = ({
 	if (isHeader || isFooter) {
 		bgColor = "#eaeaea";
 	} else if (isWinner) {
-		bgColor = "#bbd6d9";
+		bgColor = colors.secondary.main;
 	} else {
 		bgColor = isEven ? "#ffffff" : "#fafafa";
 	}
@@ -66,7 +67,7 @@ const getStyledTableCellProperties = ({
 }) => {
 	let bgColor = "transparent";
 	if (isWinner) {
-		bgColor = "#bbd6d9";
+		bgColor = colors.secondary.main;
 	} else if (isHeader || isFooter) {
 		bgColor = "#eaeaea";
 	} else if (isFirst || isLast) {
@@ -111,6 +112,11 @@ const getStyledTableCellProperties = ({
 		...(isLast && { right: 0 }),
 		textAlign: isFirst ? "left" : "center",
 		backgroundColor: bgColor,
+		...(isFirst && {
+			whiteSpace: "nowrap",
+			overflow: "hidden",
+			textOverflow: "ellipsis",
+		}),
 	};
 };
 const shouldFowardPropFunction = (prop) =>
@@ -138,9 +144,9 @@ const getStyledCellWrapperProperties = ({
 }) => {
 	let bgColor = "transparent";
 	if (isWinner && isCurrent) {
-		bgColor = "#25a9b5";
+		bgColor = colors.primary.main;
 	} else if (isCurrent) {
-		bgColor = "#bbd6d9";
+		bgColor = colors.secondary.main;
 	}
 	return {
 		display: "flex",
@@ -248,7 +254,7 @@ export const gameTableRowsStyles = () => ({
 	nextStepWrapper: {
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "flex-end",
+		justifyContent: "space-between",
 		padding: "0 12px",
 	},
 	betTrickTotalLabel: {

@@ -5,12 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import store from "store/";
 import { Provider } from "react-redux";
-import { colors } from "styles/styles";
+import { colors, typography, buttons } from "styles/styles";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
 	palette: { ...colors },
+	typography: { ...typography },
+	components: {
+		MuiButton: { ...buttons },
+	},
 });
 
 ReactDOM.render(

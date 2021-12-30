@@ -19,8 +19,8 @@ export const colors = {
 	},
 
 	text: {
-		main: "#9d9d9d",
-		focus: "#9d9d9d",
+		main: "#666",
+		focus: "#666",
 	},
 
 	transparent: {
@@ -40,12 +40,12 @@ export const colors = {
 
 	primary: {
 		main: "#25a9b5",
-		focus: "#177f89",
+		focus: "#157b85",
 	},
 
 	secondary: {
-		main: "#7b809a",
-		focus: "#8f93a9",
+		main: "#92cdd3",
+		focus: "#92cdd3",
 	},
 
 	info: {
@@ -251,5 +251,126 @@ export const colors = {
 
 	tabs: {
 		indicator: { boxShadow: "#ddd" },
+	},
+};
+
+const baseProperties = {
+	fontFamily: [
+		"Lato",
+		"Arial",
+		"Roboto",
+		'"Helvetica Neue"',
+		"Arial",
+		"sans-serif",
+	].join(","),
+	fontWeightLighter: 100,
+	fontWeightLight: 300,
+	fontWeightRegular: 400,
+	fontWeightMedium: 600,
+	fontWeightBold: 700,
+	button: {
+		fontSize: "1rem",
+		fontWeight: "600",
+		textTransform: "none",
+	},
+	fontSizeXXS: "16px",
+	// fontSizeXS: pxToRem(12),
+	// fontSizeSM: pxToRem(14),
+	// fontSizeMD: pxToRem(16),
+};
+
+const baseHeadingProperties = {
+	fontFamily: baseProperties.fontFamily,
+	color: colors.dark.main,
+	fontWeight: baseProperties.fontWeightBold,
+};
+
+export const typography = {
+	fontFamily: baseProperties.fontFamily,
+	fontWeightLighter: baseProperties.fontWeightLighter,
+	fontWeightLight: baseProperties.fontWeightLight,
+	fontWeightRegular: baseProperties.fontWeightRegular,
+	fontWeightMedium: baseProperties.fontWeightMedium,
+	fontWeightBold: baseProperties.fontWeightBold,
+
+	h1: {
+		// fontSize: pxToRem(48),
+		lineHeight: 1.25,
+		...baseHeadingProperties,
+	},
+
+	h2: {
+		// fontSize: pxToRem(36),
+		lineHeight: 1.3,
+		...baseHeadingProperties,
+	},
+
+	h3: {
+		// fontSize: pxToRem(30),
+		lineHeight: 1.375,
+		...baseHeadingProperties,
+	},
+	size: {
+		xxs: baseProperties.fontSizeXXS,
+		xs: baseProperties.fontSizeXS,
+		sm: baseProperties.fontSizeSM,
+		md: baseProperties.fontSizeMD,
+		lg: baseProperties.fontSizeLG,
+		xl: baseProperties.fontSizeXL,
+		"2xl": baseProperties.fontSize2XL,
+		"3xl": baseProperties.fontSize3XL,
+	},
+
+	lineHeight: {
+		sm: 1.25,
+		md: 1.5,
+		lg: 2,
+	},
+};
+
+export const buttons = {
+	styleOverrides: {
+		contained: {
+			backgroundColor: colors.white.main,
+			color: colors.text.main,
+			// padding: `${pxToRem(9)} ${pxToRem(24)}`,
+
+			// "&:hover": {
+			// 	backgroundColor: white.main,
+			// },
+
+			"&:active, &:active:focus, &:active:hover": {
+				opacity: 0.85,
+			},
+
+			// "& .material-icon, .material-icons-round, svg": {
+			// 	fontSize: `${pxToRem(16)} !important`,
+			// },
+		},
+
+		containedPrimary: {
+			backgroundColor: colors.primary.main,
+			color: colors.white.main,
+
+			"&:hover": {
+				backgroundColor: colors.primary.main,
+			},
+
+			"&:focus:not(:hover)": {
+				backgroundColor: colors.primary.focus,
+			},
+		},
+
+		containedSecondary: {
+			backgroundColor: colors.secondary.main,
+
+			"&:hover": {
+				backgroundColor: colors.secondary.main,
+			},
+
+			"&:focus:not(:hover)": {
+				backgroundColor: colors.secondary.focus,
+			},
+		},
 	},
 };

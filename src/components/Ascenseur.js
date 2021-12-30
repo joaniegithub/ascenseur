@@ -1,6 +1,8 @@
 import { withStyles } from "@material-ui/core/styles";
 import { useCurrentGame } from "store/actions";
 import * as React from "react";
+import { colors } from "styles/styles";
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 
 const styles = () => ({
 	turnNumbers: {
@@ -10,11 +12,11 @@ const styles = () => ({
 		fontWeight: 600,
 		fontSize: "16px",
 		width: "100%",
-		backgroundColor: "#37868d",
+		backgroundColor: colors.primary.main,
 		borderBottom: "#2e6b70 2px solid",
 	},
 	currentTurn: {
-		backgroundColor: "#7db8bd",
+		backgroundColor: colors.secondary.main,
 		padding: "3px 4px",
 	},
 	turn: {
@@ -29,21 +31,27 @@ const styles = () => ({
 		fontSize: "14px",
 		lineHeight: "16px",
 		width: "100%",
-		backgroundColor: "#37868d",
+		backgroundColor: colors.primary.main,
 		marginBottom: "10px",
 	},
 	currentPhase: {
-		backgroundColor: "#7db8bd",
+		backgroundColor: colors.secondary.main,
 		padding: "3px 4px",
 		width: "25%",
 		textAlign: "center",
 		textTransform: "uppercase",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	phase: {
 		padding: "3px 2px",
 		width: "25%",
 		textAlign: "center",
 		textTransform: "uppercase",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "center",
 	},
 });
 
@@ -71,7 +79,37 @@ const Ascenseur = (props) => {
 				})}
 			</ul>
 			<ul className={classes.phases}>
-				{["Pari", "Joute", "Décompte", "Fin"].map((phase, index) => {
+				{[
+					<React.Fragment>
+						{"Pari"}
+						<DoubleArrowIcon
+							sx={{
+								fontSize: 16,
+								marginLeft: "4px",
+							}}
+						/>
+					</React.Fragment>,
+					<React.Fragment>
+						{"Joute"}
+						<DoubleArrowIcon
+							sx={{
+								fontSize: 16,
+								marginLeft: "4px",
+							}}
+						/>
+					</React.Fragment>,
+					<React.Fragment>
+						{"Décompte"}
+						<DoubleArrowIcon
+							sx={{
+								fontSize: 16,
+								marginLeft: "4px",
+							}}
+						/>
+					</React.Fragment>,
+					,
+					"Fin",
+				].map((phase, index) => {
 					return (
 						<li
 							className={
