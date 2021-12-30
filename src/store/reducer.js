@@ -42,7 +42,7 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 		case constants.ADD_PLAYER:
 			const newPlayer = {
 				name: payload.playerName,
-				bets: [],
+				bets: [0],
 				tricks: [],
 				scores: [],
 			};
@@ -117,6 +117,19 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 					player.tricks[newTurn] = 0;
 				});
 			}
+			if (newPhase === 3) {
+				game.players.forEach((player) => {
+					let score = 0;
+					player.tricks.forEach((tricks, i) => {
+						if (player.bets[i] === tricks) {
+							score += tricks + 1;
+						} else {
+							score -= 1;
+						}
+						player.scores[i] = score;
+					});
+				});
+			}
 			return {
 				...state,
 				currentGame: {
@@ -139,10 +152,10 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 		case constants.GAME_SET_TRICKS:
 			payload.player.tricks[game.currentTurn] = payload.tricks;
 
-			let score = 0;
 			if (!payload.player.scores) {
 				payload.player.scores = [];
 			}
+			let score = 0;
 			payload.player.tricks.forEach((tricks, i) => {
 				if (payload.player.bets[i] === tricks) {
 					score += tricks + 1;

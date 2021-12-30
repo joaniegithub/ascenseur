@@ -208,7 +208,7 @@ const Game = (props) => {
 									: isPostBetPhase
 									? "Fin de ronde"
 									: isTricksPhase
-									? "Confirmer les levées remportées"
+									? "Confirmer les levées"
 									: "Tour suivant"}
 							</Button>
 						</React.Fragment>

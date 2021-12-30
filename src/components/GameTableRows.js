@@ -74,7 +74,7 @@ const GameTableRows = (props) => {
 				isCurrent={indexCol === currentTurn}
 			>
 				<span className={classes.scoreTrickData}>
-					{(missed || indexCol === currentTurn) && (
+					{(missed || (indexCol === currentTurn && !done)) && (
 						<span
 							className={
 								missed && done

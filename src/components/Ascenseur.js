@@ -107,7 +107,6 @@ const Ascenseur = (props) => {
 							}}
 						/>
 					</React.Fragment>,
-					,
 					"Fin",
 				].map((phase, index) => {
 					return (
