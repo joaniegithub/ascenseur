@@ -19,8 +19,8 @@ export const colors = {
 	},
 
 	text: {
-		main: "#666",
-		focus: "#666",
+		main: "#333",
+		focus: "#555",
 	},
 
 	transparent: {

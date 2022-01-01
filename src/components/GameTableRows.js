@@ -111,7 +111,6 @@ const GameTableRows = (props) => {
 			<StyledTd
 				isEven={indexRow % 2 === 0}
 				isFirstScoreCol={indexCol === 0}
-				isCurrent={indexCol === currentTurn}
 				isLast={isLast}
 				isWinner={isWinner}
 				key={"row_" + (indexRow + 1) + "_col_" + indexCol}
@@ -173,8 +172,12 @@ const GameTableRows = (props) => {
 								isFirst={true}
 								isEven={index % 2 === 0}
 								isWinner={isWinner}
+								isDealer={game.currentDealer.uid === player.uid}
 							>
 								{player.name}
+								{/* game.currentDealer.uid === player.uid && (
+									<span className={classes.dealer}></span>
+								) */}
 							</StyledTd>
 							{game.turnNumbers.map((turnNumber, i) => {
 								if (i > game.currentTurn) {

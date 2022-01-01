@@ -41,6 +41,7 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 
 		case constants.ADD_PLAYER:
 			const newPlayer = {
+				uid: new Date().getTime(),
 				name: payload.playerName,
 				bets: [0],
 				tricks: [],
@@ -57,6 +58,9 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 			const playerDelete = payload.player;
 			const playerDeleteIndex = game.players.indexOf(playerDelete);
 			game.players.splice(playerDeleteIndex, 1);
+			if (payload.player.uid === game.dealer) {
+				game.dealer = undefined;
+			}
 			return {
 				...state,
 				currentGame: {
@@ -93,13 +97,28 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 				},
 			};
 
+		case constants.SET_DEALER:
+			return {
+				...state,
+				currentGame: {
+					...game,
+					dealer: payload.playerUid,
+				},
+			};
+
 		case constants.START_GAME:
+			const firstDealer = game.players.find((player) => {
+				return player.uid === game.dealer;
+			});
+			const indexFirstDealer = game.players.indexOf(firstDealer);
+			game.dealer = indexFirstDealer;
 			return {
 				...state,
 				currentGame: {
 					...game,
 					currentTurn: 0,
 					currentPhase: 0,
+					currentDealer: firstDealer,
 				},
 			};
 
@@ -130,12 +149,17 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 					});
 				});
 			}
+
+			const thisTurnDealer =
+				game.players[(game.dealer + newTurn) % game.players.length];
+			console.log(game.dealer, thisTurnDealer, thisTurnDealer);
 			return {
 				...state,
 				currentGame: {
 					...game,
 					currentTurn: newTurn,
 					currentPhase: newPhase,
+					currentDealer: thisTurnDealer,
 				},
 			};
 

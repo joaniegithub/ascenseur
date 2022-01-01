@@ -5,6 +5,7 @@ import { useCurrentGame } from "store/actions";
 import React from "react";
 import NewGame from "components/NewGame";
 import Game from "components/Game";
+import InfoModal from "components/InfoModal";
 
 const styles = () => ({
 	box: {
@@ -17,8 +18,17 @@ const styles = () => ({
 
 const AscenseurApp = (props) => {
 	const { classes } = props;
+	const [openInfoModal, setOpenInfoModal] = React.useState(false);
 
 	const currentGame = useCurrentGame();
+
+	// Modal Info
+	const handleClickInfo = () => {
+		setOpenInfoModal(true);
+	};
+	const handleCloseInfoModal = () => {
+		setOpenInfoModal(false);
+	};
 
 	return (
 		<Layout>
@@ -26,8 +36,12 @@ const AscenseurApp = (props) => {
 				{currentGame && currentGame.currentTurn >= 0 ? (
 					<Game />
 				) : (
-					<NewGame />
+					<NewGame onClickInfo={handleClickInfo} />
 				)}
+				<InfoModal
+					openInfoModal={openInfoModal}
+					onCloseInfoModal={handleCloseInfoModal}
+				/>
 			</Box>
 		</Layout>
 	);

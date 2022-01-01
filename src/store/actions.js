@@ -59,6 +59,12 @@ export const setNbTurns = (_nbTurns, _turnsMode, _turnNumbers, _nbCards) => {
 		nbCards: _nbCards,
 	};
 };
+export const chooseDealer = (_playerUid) => {
+	return {
+		type: constants.SET_DEALER,
+		playerUid: _playerUid,
+	};
+};
 export const startGame = () => {
 	return {
 		type: constants.START_GAME,

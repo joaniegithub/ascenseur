@@ -13,14 +13,15 @@ const styles = () => ({
 		fontSize: "16px",
 		width: "100%",
 		backgroundColor: colors.primary.main,
-		borderBottom: "#2e6b70 2px solid",
+		borderBottom: "#1f8089 1px solid",
 	},
 	currentTurn: {
 		backgroundColor: colors.secondary.main,
-		padding: "3px 4px",
+		padding: "3px 8px",
+		margin: "0 -4px",
 	},
 	turn: {
-		padding: "3px 2px",
+		padding: "3px 3px",
 	},
 
 	phases: {

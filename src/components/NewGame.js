@@ -7,6 +7,7 @@ import {
 	deletePlayer,
 	swapPlayer,
 	setNbTurns,
+	chooseDealer,
 	startGame,
 } from "store/actions";
 import { useDispatch } from "react-redux";
@@ -27,8 +28,19 @@ import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown";
 import { IconButton } from "@material-ui/core";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import HelpIcon from "@mui/icons-material/Help";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
 
 const styles = () => ({
+	wrapperbuttonHome: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+	},
 	secondTitle: { ...secondTitle },
 	wrapper: {
 		padding: "0 12px",
@@ -103,55 +115,58 @@ const styles = () => ({
 });
 
 const NewGame = (props) => {
-	const { classes } = props;
+	const { classes, onClickInfo } = props;
 
 	const [openNewPlayer, setOpenNewPlayer] = React.useState(false);
 	const [nbPlayers, setNbPlayers] = React.useState(0);
 	const [nbTurnsMode, setNbTurnsMode] = React.useState(0);
+	const [dealer, setDealer] = React.useState("");
 
 	let nbCards = 52 - (52 % nbPlayers);
 
 	const nbTurnsOneWay = Math.floor(nbCards / nbPlayers) || "";
 	const nbTurnsTwoWays = Math.floor(nbCards / nbPlayers) * 2 - 1 || "";
-	console.log(nbTurnsOneWay);
-	console.log(nbTurnsTwoWays);
 
 	const getTurnNumbers = (_nbTurns, _nbTurnsMode) => {
 		const turns = [];
 		for (let i = 1; i <= _nbTurns; i++) {
 			turns.push(i);
 		}
-		console.log("_nbTurnsMode=" + _nbTurnsMode);
-		console.log("TWO_WAYS=" + TWO_WAYS);
 		if (_nbTurnsMode === TWO_WAYS) {
-			console.log("_nbTurnsMode=" + _nbTurnsMode);
 			for (let i = _nbTurns - 1; i > 0; i--) {
 				turns.push(i);
 			}
 		}
-		console.log(turns);
 		return turns;
-	};
-
-	const handleClickOpenNewPlayer = () => {
-		setOpenNewPlayer(true);
 	};
 
 	const handleChangeNbTurns = (event, val) => {
 		const tmpNbTurnsMode = parseInt(val);
 		setNbTurnsMode(tmpNbTurnsMode);
-		console.log(tmpNbTurnsMode);
 		const nbTurns =
 			tmpNbTurnsMode === ONE_WAY ? nbTurnsOneWay : nbTurnsTwoWays;
 		const turnNumbers = getTurnNumbers(nbTurnsOneWay, tmpNbTurnsMode);
 		dispatch(setNbTurns(nbTurns, tmpNbTurnsMode, turnNumbers, nbCards));
 	};
+	const handleChangeDealer = (event) => {
+		const tempDealerUid = event.target.value;
+		setDealer(tempDealerUid);
+		dispatch(chooseDealer(tempDealerUid));
+	};
 
+	// Modal New Player
+	const handleClickOpenNewPlayer = () => {
+		setOpenNewPlayer(true);
+	};
 	const handleCloseNewPlayer = (_playerName) => {
 		setOpenNewPlayer(false);
 		if (_playerName) {
 			dispatch(addPlayer(_playerName));
 		}
+	};
+	// Modal Info
+	const handleClickInfo = () => {
+		onClickInfo();
 	};
 
 	// const settings = useSettings();
@@ -182,12 +197,11 @@ const NewGame = (props) => {
 		) {
 			setNbPlayers(currentGame.players.length);
 			setNbTurnsMode(currentGame.turnsMode || 0);
+			setNbTurnsMode(currentGame.turnsMode || 0);
+			setDealer(currentGame.dealer || "");
 		}
 	}, [currentGame]);
 
-	if (!currentGame) {
-		return null;
-	}
 	return (
 		<div className={classes.wrapper}>
 			{currentGame ? (
@@ -319,6 +333,42 @@ const NewGame = (props) => {
 							</ToggleButtonGroup>
 						</div>
 					</div>
+					<div className={classes.buttonGroupContainer}>
+						<div
+							component="fieldset"
+							className={classes.buttonGroupWrapper}
+						>
+							<FormLabel
+								component="legend"
+								className={classes.buttonGroupLabel}
+							>
+								Donneur:
+							</FormLabel>
+							<FormControl fullWidth>
+								<Select
+									value={dealer}
+									size="small"
+									displayEmpty
+									onChange={handleChangeDealer}
+									disabled={
+										!currentGame.players ||
+										currentGame.players.length === 0
+									}
+								>
+									{currentGame.players.map((player, i) => {
+										return (
+											<MenuItem
+												value={player.uid}
+												key={`player_dealer_${i}`}
+											>
+												{player.name}
+											</MenuItem>
+										);
+									})}
+								</Select>
+							</FormControl>
+						</div>
+					</div>
 					<div className={classes.wrapperbutton}>
 						<Button
 							variant="contained"
@@ -326,7 +376,8 @@ const NewGame = (props) => {
 							disabled={
 								!(
 									currentGame.players.length >= 2 &&
-									currentGame.nbTurns > 0
+									currentGame.nbTurns > 0 &&
+									currentGame.dealer != null
 								)
 							}
 							endIcon={<PlayCircleIcon />}
@@ -337,7 +388,15 @@ const NewGame = (props) => {
 					</div>
 				</React.Fragment>
 			) : (
-				<div className={classes.wrapperbutton}>
+				<div className={classes.wrapperbuttonHome}>
+					{/*<Button
+						variant="contained"
+						size="small"
+						endIcon={<HelpIcon />}
+						onClick={handleClickInfo}
+					>
+						l'Ascenseur?
+					</Button>*/}
 					<Button
 						variant="contained"
 						size="small"

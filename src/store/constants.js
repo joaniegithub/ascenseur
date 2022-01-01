@@ -5,6 +5,7 @@ export const ADD_PLAYER = "ADD_PLAYER";
 export const DELETE_PLAYER = "DELETE_PLAYER";
 export const SWAP_PLAYER = "SWAP_PLAYER";
 export const SET_NB_TURNS = "SET_NB_TURNS";
+export const SET_DEALER = "SET_DEALER";
 export const START_GAME = "START_GAME";
 export const GAME_NEXT = "GAME_NEXT";
 export const GAME_SET_BET = "GAME_SET_BET";

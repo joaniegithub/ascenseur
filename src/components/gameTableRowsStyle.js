@@ -32,7 +32,7 @@ const getStyledTableRowProperties = ({
 	}
 	return {
 		position: "relative",
-		height: "48px",
+		height: "40px",
 		width: "100%",
 		...(!isFooter && {
 			borderBottom: "1px solid #ddd",
@@ -64,6 +64,7 @@ const getStyledTableCellProperties = ({
 	isFirstScoreCol,
 	isEven,
 	isWinner,
+	isDealer,
 }) => {
 	let bgColor = "transparent";
 	if (isWinner) {
@@ -117,6 +118,28 @@ const getStyledTableCellProperties = ({
 			overflow: "hidden",
 			textOverflow: "ellipsis",
 		}),
+
+		...(isDealer && {
+			// position: "relative",
+			paddingRight: "24px",
+			"&::after": {
+				content: "'D'",
+				display: "block",
+				width: "16px",
+				height: "16px",
+				lineHeight: "16px",
+				color: "#fff",
+				backgroundColor: colors.primary.main,
+				fontSize: "11px",
+				fontWeight: 400,
+				textAlign: "center",
+				// paddingLeft: "6px",
+				position: "absolute",
+				top: "4px",
+				right: "4px",
+				borderRadius: "10px",
+			},
+		}),
 	};
 };
 const shouldFowardPropFunction = (prop) =>
@@ -126,7 +149,8 @@ const shouldFowardPropFunction = (prop) =>
 	prop !== "isLast" &&
 	prop !== "isFirstScoreCol" &&
 	prop !== "isEven" &&
-	prop !== "isWinner";
+	prop !== "isWinner" &&
+	prop !== "isDealer";
 export const StyledTh = styled("th", {
 	shouldForwardProp: shouldFowardPropFunction,
 })(getStyledTableCellProperties);
@@ -154,7 +178,7 @@ const getStyledCellWrapperProperties = ({
 		justifyContent: isWrapper ? "flex-start" : "center",
 		alignItems: "center",
 		height: "100%",
-		minHeight: isHeader || isFooter ? "48px" : "64px",
+		minHeight: isHeader || isFooter ? "40px" : "56px",
 		width: isWrapper ? "100%" : isControl ? "110px" : "44px",
 		backgroundColor: bgColor,
 	};
@@ -173,6 +197,7 @@ export const StyledDivWrapper = styled("div", {
 export const gameTableRowsStyles = () => ({
 	gameContainer: {
 		width: "100%",
+		padding: "0 0 12px 0",
 	},
 	gameInfo: {
 		margin: "0 12px 6px",
@@ -186,11 +211,7 @@ export const gameTableRowsStyles = () => ({
 		width: "100%",
 		overflowY: "visible",
 		padding: 0,
-
-		"th, tr, td": {
-			margin: "0",
-			whiteSpace: "nowrap",
-		},
+		margin: "0 0 12px 0",
 	},
 	table: {
 		position: "relative",
@@ -201,6 +222,14 @@ export const gameTableRowsStyles = () => ({
 	tableRow: {
 		position: "relative",
 		height: "64px",
+	},
+
+	dealer: {
+		paddingLeft: "6px",
+		"&::before": {
+			content: "'D'",
+			display: "block",
+		},
 	},
 
 	currentVal: {
@@ -263,6 +292,6 @@ export const gameTableRowsStyles = () => ({
 		padding: "0",
 	},
 	betTrickTTotalValue: {
-		padding: "6px 0",
+		padding: "4px 0 0",
 	},
 });

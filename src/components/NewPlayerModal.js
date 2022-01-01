@@ -34,10 +34,10 @@ const NewPlayerModal = (props) => {
 		<Dialog open={openNewPlayer}>
 			<DialogTitle>Nouveau joueur</DialogTitle>
 			<DialogContent>
-				<DialogContentText>
+				{/*<DialogContentText>
 					To subscribe to this website, please enter your email
-					address here. We will send updates occasionally.
-				</DialogContentText>
+				address here. We will send updates occasionally.
+				</DialogContentText>*/}
 				<TextField
 					autoFocus
 					margin="dense"
