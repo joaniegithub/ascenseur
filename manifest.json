@@ -1,6 +1,10 @@
 {
   "short_name": "Ascenseur",
   "name": "Ascenseur Companion",
+  "start_url": "./", 
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +22,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#25a9b5",
+  "background_color": "#ffffff",
+  "newBranch":"true"
 }
