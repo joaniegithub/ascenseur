@@ -85,15 +85,17 @@ const GameTableRows = (props) => {
 							{confirmedTurnBet}
 						</span>
 					)}
-					<span
-						className={
-							missed
-								? classes.scoreTrickResultMissed
-								: classes.scoreTrickResult
-						}
-					>
-						{confirmedTurnTrick}
-					</span>
+					{confirmedTurnTrick !== "" && (
+						<span
+							className={
+								missed
+									? classes.scoreTrickResultMissed
+									: classes.scoreTrickResult
+							}
+						>
+							{confirmedTurnTrick}
+						</span>
+					)}
 				</span>
 				<span
 					className={
@@ -198,7 +200,7 @@ const GameTableRows = (props) => {
 										game.currentTurn >= i) ||
 									game.currentTurn > i
 										? turnTrick
-										: "-";
+										: "";
 								const turnScore = player.scores[i];
 								const confirmedTurnScore =
 									(game.currentPhase >= 3 &&

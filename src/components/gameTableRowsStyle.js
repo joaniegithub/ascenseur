@@ -174,7 +174,7 @@ const getStyledCellWrapperProperties = ({
 	}
 	return {
 		display: "flex",
-		flexDirection: isWrapper ? "row" : "column",
+		flexDirection: isWrapper || isFooter ? "row" : "column",
 		justifyContent: isWrapper ? "flex-start" : "center",
 		alignItems: "center",
 		height: "100%",
@@ -239,45 +239,70 @@ export const gameTableRowsStyles = () => ({
 	scoreTrickData: {
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "flex-start",
+		justifyContent: "center",
+		width: "100%",
 		fontSize: "12px",
+		lineHeight: "24px",
+		background: "rgba(0,78,86,0.25)",
 	},
 	scoreTrickBet: {
-		color: "#000",
+		color: "#3a6366",
 		fontSize: "12px",
-		padding: "4px 6px",
+		padding: "0px 6px",
 		fontWeight: "500",
 	},
 	scoreTrickBetMissed: {
-		color: "#444",
+		color: "#fff",
 		fontSize: "12px",
-		padding: "4px 6px",
+		padding: "0px 6px",
 		fontWeight: "500",
 		textDecoration: "line-through",
 	},
 	scoreTrickResult: {
-		color: "#000",
+		color: "#3a6366",
 		fontSize: "12px",
-		padding: "4px 6px",
+		padding: "0px 6px",
 		fontWeight: "500",
 	},
 	scoreTrickResultMissed: {
-		color: "#888",
+		color: "#fff",
 		fontSize: "12px",
-		padding: "4px 6px",
+		padding: "0px 6px",
 		fontWeight: "500",
 	},
 	scoreResult: {
 		color: "#000",
-		fontSize: "18px",
+		fontSize: "16px",
 		fontWeight: 600,
-		padding: "6px 6px",
+		padding: "0 6px",
+		lineHeight: "32px",
 	},
 	scoreResultMissed: {
 		color: "#c70037",
-		fontSize: "18px",
+		fontSize: "16px",
 		fontWeight: 600,
-		padding: "6px 6px",
+		padding: "0 6px",
+		lineHeight: "32px",
+	},
+
+	betsUnder: {
+		minWidth: "10px",
+		display: "inline-block",
+		marginTop: "8px",
+		paddingTop: "2px",
+		fontWeight: 300,
+		fontSize: "14px",
+		borderTop: "#000 1px solid",
+	},
+	betsOver: {
+		minWidth: "10px",
+		display: "inline-block",
+		marginBottom: "8px",
+		paddingBottom: "2px",
+		// fontWeight: 700,
+		fontWeight: 300,
+		fontSize: "14px",
+		borderBottom: "#000 1px solid",
 	},
 
 	nextStepWrapper: {
@@ -289,9 +314,6 @@ export const gameTableRowsStyles = () => ({
 	betTrickTotalLabel: {
 		color: "#888",
 		fontWeight: 500,
-		padding: "0",
-	},
-	betTrickTTotalValue: {
-		padding: "4px 0 0",
+		padding: "0 6px 0 0",
 	},
 });

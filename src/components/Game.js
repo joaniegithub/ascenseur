@@ -22,6 +22,12 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 const styles = gameTableRowsStyles;
 
+const getBets = (game, i) => {
+	return game.players.reduce((a, player) => {
+		return a + player.bets[i];
+	}, 0);
+};
+
 const Game = (props) => {
 	const { classes } = props;
 
@@ -60,13 +66,14 @@ const Game = (props) => {
 	const totalBetOrTricks = getGameTotalBetOrTricks(game);
 	const isGameDone =
 		game.currentTurn === game.nbTurns - 1 && game.currentPhase === 3;
+	const currentTurnNumber = game.turnNumbers[game.currentTurn];
 
 	return (
 		<div className={classes.gameContainer}>
 			<div className={classes.gameInfo}>
 				{game.players.length} joueurs | {game.nbTurns} tours | Mode{" "}
 				{game.turnsMode === TWO_WAYS ? "aller-retour" : "aller-simple"}{" "}
-				| {game.nbCards} cartes.
+				| {game.nbCards} cartes
 			</div>
 			<Ascenseur />
 
@@ -103,7 +110,7 @@ const Game = (props) => {
 										isCurrent={true}
 										isHeader={true}
 									>
-										{game.turnNumbers[game.currentTurn]}
+										{currentTurnNumber}
 									</StyledDivWrapper>
 								</StyledTh>
 							</StyledTr>
@@ -122,13 +129,22 @@ const Game = (props) => {
 									if (i >= game.currentTurn) {
 										return null;
 									}
+									const bets = getBets(game, i);
 									return (
 										<StyledTd
 											isFooter={true}
 											isFirstScoreCol={i === 0}
 											key={"row_last_col_" + i}
 										>
-											-
+											<span
+												className={
+													bets > i
+														? classes.betsOver
+														: classes.betsUnder
+												}
+											>
+												{bets}
+											</span>
 										</StyledTd>
 									);
 								})}
@@ -144,7 +160,27 @@ const Game = (props) => {
 										<StyledDivWrapper
 											isCurrent={true}
 											isFooter={true}
-										></StyledDivWrapper>
+										>
+											{game.currentPhase > 0 &&
+												(() => {
+													const bets = getBets(
+														game,
+														game.currentTurn
+													);
+													return (
+														<span
+															className={
+																bets >
+																currentTurnNumber
+																	? classes.betsOver
+																	: classes.betsUnder
+															}
+														>
+															{bets}
+														</span>
+													);
+												})()}
+										</StyledDivWrapper>
 										{(isBetPhase || isTricksPhase) && (
 											<StyledDivWrapper
 												isControl={true}
@@ -157,13 +193,7 @@ const Game = (props) => {
 												>
 													Total:
 												</span>
-												<span
-													className={
-														classes.betTrickTTotalValue
-													}
-												>
-													{totalBetOrTricks}
-												</span>
+												<span>{totalBetOrTricks}</span>
 											</StyledDivWrapper>
 										)}
 									</StyledDivWrapper>
@@ -206,7 +236,7 @@ const Game = (props) => {
 								{isBetPhase
 									? "Confirmer les paris"
 									: isPostBetPhase
-									? "Fin de ronde"
+									? "Passer au décompte"
 									: isTricksPhase
 									? "Confirmer les levées"
 									: "Tour suivant"}

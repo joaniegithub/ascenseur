@@ -13,7 +13,7 @@ const styles = () => ({
 		fontSize: "16px",
 		width: "100%",
 		backgroundColor: colors.primary.main,
-		borderBottom: "#1f8089 1px solid",
+		borderBottom: "#fff 1px solid",
 	},
 	currentTurn: {
 		backgroundColor: colors.secondary.main,
@@ -108,7 +108,7 @@ const Ascenseur = (props) => {
 							}}
 						/>
 					</React.Fragment>,
-					"Fin",
+					"Pointage",
 				].map((phase, index) => {
 					return (
 						<li
