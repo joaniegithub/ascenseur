@@ -124,8 +124,7 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 
 		case constants.GAME_NEXT:
 			const newPhase = (game.currentPhase + 1) % 4;
-			const newTurn =
-				newPhase === 0 ? game.currentTurn + 1 : game.currentTurn;
+			const newTurn = newPhase === 0 ? game.currentTurn + 1 : game.currentTurn;
 			if (newPhase === 0) {
 				game.players.forEach((player) => {
 					player.bets[newTurn] = 0;
@@ -150,8 +149,7 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 				});
 			}
 
-			const thisTurnDealer =
-				game.players[(game.dealer + newTurn) % game.players.length];
+			const thisTurnDealer = game.players[(game.dealer + newTurn) % game.players.length];
 			console.log(game.dealer, thisTurnDealer, thisTurnDealer);
 			return {
 				...state,

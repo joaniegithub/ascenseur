@@ -54,11 +54,7 @@ const NewPlayerModal = (props) => {
 				<Button onClick={handleCloseCancel} variant="outlined">
 					Annuler
 				</Button>
-				<Button
-					onClick={handleClose}
-					disabled={!playerName}
-					variant="contained"
-				>
+				<Button onClick={handleClose} disabled={!playerName} variant="contained">
 					Ajouter
 				</Button>
 			</DialogActions>

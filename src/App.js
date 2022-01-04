@@ -38,10 +38,7 @@ const AscenseurApp = (props) => {
 				) : (
 					<NewGame onClickInfo={handleClickInfo} />
 				)}
-				<InfoModal
-					openInfoModal={openInfoModal}
-					onCloseInfoModal={handleCloseInfoModal}
-				/>
+				<InfoModal openInfoModal={openInfoModal} onCloseInfoModal={handleCloseInfoModal} />
 			</Box>
 		</Layout>
 	);

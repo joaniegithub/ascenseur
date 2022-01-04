@@ -31,9 +31,7 @@ const Footer = (props) => {
 	return (
 		<React.Fragment>
 			<div className={classes.footer}>
-				<p className={classes.footerCopyright}>
-					Ascenseur Companion @2021 Joanie Lessnick
-				</p>
+				<p className={classes.footerCopyright}>Ascenseur Companion @2021 Joanie Lessnick</p>
 			</div>
 		</React.Fragment>
 	);

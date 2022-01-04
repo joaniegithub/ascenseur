@@ -97,6 +97,7 @@ html,
 body {
 	min-height: 100%;
 	overflow: auto;
+	font-family: "Lato";
 }
 body {
 	margin: 0;

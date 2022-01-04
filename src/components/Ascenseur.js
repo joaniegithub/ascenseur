@@ -68,9 +68,7 @@ const Ascenseur = (props) => {
 					return (
 						<li
 							className={
-								game.currentTurn === index
-									? classes.currentTurn
-									: classes.turn
+								game.currentTurn === index ? classes.currentTurn : classes.turn
 							}
 							key={`turn_${index}`}
 						>
@@ -113,9 +111,7 @@ const Ascenseur = (props) => {
 					return (
 						<li
 							className={
-								game.currentPhase === index
-									? classes.currentPhase
-									: classes.phase
+								game.currentPhase === index ? classes.currentPhase : classes.phase
 							}
 							key={`phase_${index}`}
 						>

@@ -1,6 +1,10 @@
 {
   "short_name": "Ascenseur",
   "name": "Ascenseur Companion",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "favicon.ico",
@@ -13,13 +17,18 @@
       "sizes": "192x192"
     },
     {
+      "src": "maskable_icon.png",
+      "type": "image/png",
+      "sizes": "1024x1024",
+      "purpose": "any maskable"
+    },
+    {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#25a9b5",
+  "background_color": "#ffffff",
+  "newBranch":"true"
 }

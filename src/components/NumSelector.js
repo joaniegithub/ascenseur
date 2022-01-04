@@ -36,19 +36,11 @@ const NumSelector = (props) => {
 
 	return (
 		<div className={classes.wrapperValue}>
-			<IconButton
-				disabled={value <= 0}
-				size="small"
-				onClick={handleRemove}
-			>
+			<IconButton disabled={value <= 0} size="small" onClick={handleRemove}>
 				<RemoveCircleOutlineIcon sx={{ fontSize: 28 }} />
 			</IconButton>
 			<span className={classes.labelValue}>{value}</span>
-			<IconButton
-				disabled={value >= max}
-				size="small"
-				onClick={handleAdd}
-			>
+			<IconButton disabled={value >= max} size="small" onClick={handleAdd}>
 				<AddCircleOutlineIcon sx={{ fontSize: 28 }} />
 			</IconButton>
 		</div>

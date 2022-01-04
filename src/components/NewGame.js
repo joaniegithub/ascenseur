@@ -34,12 +34,25 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 
+const containerBorder = {
+	borderTop: "#ddd 1px solid",
+	paddingTop: "16px",
+	marginLeft: "-12px",
+	marginRight: "-12px",
+	// width: "calc(100% + 24px)",
+	paddingLeft: "12px",
+	paddingRight: "12px",
+	background: "linear-gradient(180deg, rgba(0,0,0,0.025) 0px, rgba(0,0,0,0) 15px)",
+};
+
 const styles = () => ({
 	wrapperbuttonHome: {
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center",
+		borderTop: "#ddd 1px solid",
+		paddingTop: "16px",
 	},
 	secondTitle: { ...secondTitle },
 	wrapper: {
@@ -53,6 +66,7 @@ const styles = () => ({
 		flexDirection: "column",
 		justifyContent: "flex-start",
 		margin: "16px 0",
+		...containerBorder,
 	},
 	rows: {
 		width: "100%",
@@ -62,7 +76,7 @@ const styles = () => ({
 		margin: "0",
 	},
 	row: {
-		padding: "6px 10px",
+		padding: "4px 6px 4px 10px",
 		margin: "3px 0 !important",
 		width: "100%",
 		boxSizing: "border-box",
@@ -72,6 +86,19 @@ const styles = () => ({
 		alignItems: "center",
 		backgroundColor: "#fafafa",
 		fontWeight: 500,
+	},
+	row_no_player: {
+		padding: "6px 0",
+		margin: "3px 0 !important",
+		width: "100%",
+		boxSizing: "border-box",
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		fontWeight: 400,
+		color: "#aaa",
+		fontStyle: "italic",
 	},
 	wrapperPlayerbuttons: {
 		display: "flex",
@@ -86,9 +113,18 @@ const styles = () => ({
 		flexDirection: "row",
 		justifyContent: "flex-start",
 	},
+	wrapperbuttonCommencer: {
+		margin: "4px 0",
+		width: "100%",
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "flex-start",
+		...containerBorder,
+	},
 	buttonGroupContainer: {
 		width: "100%",
 		margin: "4px 0 16px",
+		...containerBorder,
 	},
 	buttonGroupWrapper: {
 		width: "100%",
@@ -143,8 +179,7 @@ const NewGame = (props) => {
 	const handleChangeNbTurns = (event, val) => {
 		const tmpNbTurnsMode = parseInt(val);
 		setNbTurnsMode(tmpNbTurnsMode);
-		const nbTurns =
-			tmpNbTurnsMode === ONE_WAY ? nbTurnsOneWay : nbTurnsTwoWays;
+		const nbTurns = tmpNbTurnsMode === ONE_WAY ? nbTurnsOneWay : nbTurnsTwoWays;
 		const turnNumbers = getTurnNumbers(nbTurnsOneWay, tmpNbTurnsMode);
 		dispatch(setNbTurns(nbTurns, tmpNbTurnsMode, turnNumbers, nbCards));
 	};
@@ -190,11 +225,7 @@ const NewGame = (props) => {
 	};
 
 	React.useEffect(() => {
-		if (
-			currentGame &&
-			currentGame.players &&
-			currentGame.players.length > 0
-		) {
+		if (currentGame && currentGame.players && currentGame.players.length > 0) {
 			setNbPlayers(currentGame.players.length);
 			setNbTurnsMode(currentGame.turnsMode || 0);
 			setNbTurnsMode(currentGame.turnsMode || 0);
@@ -206,82 +237,64 @@ const NewGame = (props) => {
 		<div className={classes.wrapper}>
 			{currentGame ? (
 				<React.Fragment>
-					<h2 className={classes.secondTitle}>Liste des joueurs</h2>
+					<h2 className={classes.secondTitle}>Nouvelle Partie</h2>
 					{currentGame.players && (
 						<div className={classes.wrapperRows}>
-							{currentGame.players &&
-							currentGame.players.length > 0 ? (
+							<FormLabel component="legend" className={classes.buttonGroupLabel}>
+								Liste des joueurs:
+							</FormLabel>
+							{currentGame.players && currentGame.players.length > 0 ? (
 								<ul className={classes.rows}>
-									{currentGame.players.map(
-										(player, index) => {
-											return (
-												<li
-													className={classes.row}
-													key={index}
-												>
-													{index + 1}. {player.name}
-													<div
-														className={
-															classes.wrapperPlayerbuttons
+									{currentGame.players.map((player, index) => {
+										return (
+											<li className={classes.row} key={index}>
+												{index + 1}. {player.name}
+												<div className={classes.wrapperPlayerbuttons}>
+													<IconButton
+														size="small"
+														onClick={(e) =>
+															handleSwapDownPlayer(player)
 														}
 													>
-														<IconButton
-															size="small"
-															onClick={(e) =>
-																handleSwapDownPlayer(
-																	player
-																)
-															}
-														>
-															<ArrowCircleDownIcon
-																sx={{
-																	fontSize: 28,
-																}}
-															/>
-														</IconButton>
-														<IconButton
-															size="small"
-															onClick={(e) =>
-																handleSwapUpPlayer(
-																	player
-																)
-															}
-														>
-															<ArrowCircleUpIcon
-																sx={{
-																	fontSize: 28,
-																}}
-															/>
-														</IconButton>
-														<IconButton
-															size="small"
-															onClick={(e) =>
-																handleDeletePlayer(
-																	player
-																)
-															}
-														>
-															<CancelIcon
-																sx={{
-																	fontSize: 28,
-																}}
-															/>
-														</IconButton>
-													</div>
-												</li>
-											);
-										}
-									)}
+														<ArrowCircleDownIcon
+															sx={{
+																fontSize: 28,
+															}}
+														/>
+													</IconButton>
+													<IconButton
+														size="small"
+														onClick={(e) => handleSwapUpPlayer(player)}
+													>
+														<ArrowCircleUpIcon
+															sx={{
+																fontSize: 28,
+															}}
+														/>
+													</IconButton>
+													<IconButton
+														size="small"
+														onClick={(e) => handleDeletePlayer(player)}
+													>
+														<CancelIcon
+															sx={{
+																fontSize: 28,
+															}}
+														/>
+													</IconButton>
+												</div>
+											</li>
+										);
+									})}
 								</ul>
 							) : (
-								<div className={classes.row}>
+								<div className={classes.row_no_player}>
 									Ajouter au moins 2 joueurs
 								</div>
 							)}
 							<div className={classes.wrapperbutton}>
 								<Button
-									color="secondary"
-									variant="contained"
+									variant="outlined"
 									size="small"
 									startIcon={<AddCircleIcon />}
 									onClick={handleClickOpenNewPlayer}
@@ -292,14 +305,8 @@ const NewGame = (props) => {
 						</div>
 					)}
 					<div className={classes.buttonGroupContainer}>
-						<div
-							component="fieldset"
-							className={classes.buttonGroupWrapper}
-						>
-							<FormLabel
-								component="legend"
-								className={classes.buttonGroupLabel}
-							>
+						<div component="fieldset" className={classes.buttonGroupWrapper}>
+							<FormLabel component="legend" className={classes.buttonGroupLabel}>
 								Nombre de tours:
 							</FormLabel>
 							<ToggleButtonGroup
@@ -334,14 +341,8 @@ const NewGame = (props) => {
 						</div>
 					</div>
 					<div className={classes.buttonGroupContainer}>
-						<div
-							component="fieldset"
-							className={classes.buttonGroupWrapper}
-						>
-							<FormLabel
-								component="legend"
-								className={classes.buttonGroupLabel}
-							>
+						<div component="fieldset" className={classes.buttonGroupWrapper}>
+							<FormLabel component="legend" className={classes.buttonGroupLabel}>
 								Donneur:
 							</FormLabel>
 							<FormControl fullWidth>
@@ -351,16 +352,12 @@ const NewGame = (props) => {
 									displayEmpty
 									onChange={handleChangeDealer}
 									disabled={
-										!currentGame.players ||
-										currentGame.players.length === 0
+										!currentGame.players || currentGame.players.length === 0
 									}
 								>
 									{currentGame.players.map((player, i) => {
 										return (
-											<MenuItem
-												value={player.uid}
-												key={`player_dealer_${i}`}
-											>
+											<MenuItem value={player.uid} key={`player_dealer_${i}`}>
 												{player.name}
 											</MenuItem>
 										);
@@ -369,7 +366,7 @@ const NewGame = (props) => {
 							</FormControl>
 						</div>
 					</div>
-					<div className={classes.wrapperbutton}>
+					<div className={classes.wrapperbuttonCommencer}>
 						<Button
 							variant="contained"
 							size="small"
@@ -407,10 +404,7 @@ const NewGame = (props) => {
 					</Button>
 				</div>
 			)}
-			<NewPlayerModal
-				openNewPlayer={openNewPlayer}
-				onCloseNewPlayer={handleCloseNewPlayer}
-			/>
+			<NewPlayerModal openNewPlayer={openNewPlayer} onCloseNewPlayer={handleCloseNewPlayer} />
 		</div>
 	);
 };

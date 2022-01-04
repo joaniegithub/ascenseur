@@ -31,8 +31,7 @@ const getBets = (game, i) => {
 const Game = (props) => {
 	const { classes } = props;
 
-	const [confirmCancelGameOpen, setConfirmCancelGameOpen] =
-		React.useState(false);
+	const [confirmCancelGameOpen, setConfirmCancelGameOpen] = React.useState(false);
 	// Confirm Delete Dialog
 	const handleConfirmCancelGameClose = () => {
 		setConfirmCancelGameOpen(false);
@@ -64,16 +63,15 @@ const Game = (props) => {
 	const isTricksPhase = game.currentPhase === 2;
 	const btnNextDisabled = !getGameCanGoNext(game);
 	const totalBetOrTricks = getGameTotalBetOrTricks(game);
-	const isGameDone =
-		game.currentTurn === game.nbTurns - 1 && game.currentPhase === 3;
+	const isGameDone = game.currentTurn === game.nbTurns - 1 && game.currentPhase === 3;
 	const currentTurnNumber = game.turnNumbers[game.currentTurn];
 
 	return (
 		<div className={classes.gameContainer}>
 			<div className={classes.gameInfo}>
 				{game.players.length} joueurs | {game.nbTurns} tours | Mode{" "}
-				{game.turnsMode === TWO_WAYS ? "aller-retour" : "aller-simple"}{" "}
-				| {game.nbCards} cartes
+				{game.turnsMode === TWO_WAYS ? "aller-retour" : "aller-simple"} | {game.nbCards}{" "}
+				cartes
 			</div>
 			<Ascenseur />
 
@@ -101,15 +99,8 @@ const Game = (props) => {
 										</StyledTh>
 									);
 								})}
-								<StyledTh
-									isHeader={true}
-									isLast={true}
-									key={"row_0_col_last"}
-								>
-									<StyledDivWrapper
-										isCurrent={true}
-										isHeader={true}
-									>
+								<StyledTh isHeader={true} isLast={true} key={"row_0_col_last"}>
+									<StyledDivWrapper isCurrent={true} isHeader={true}>
 										{currentTurnNumber}
 									</StyledDivWrapper>
 								</StyledTh>
@@ -138,9 +129,7 @@ const Game = (props) => {
 										>
 											<span
 												className={
-													bets > i
-														? classes.betsOver
-														: classes.betsUnder
+													bets > i ? classes.betsOver : classes.betsUnder
 												}
 											>
 												{bets}
@@ -148,30 +137,16 @@ const Game = (props) => {
 										</StyledTd>
 									);
 								})}
-								<StyledTd
-									isFooter={true}
-									isLast={true}
-									key={"row_last_col_last"}
-								>
-									<StyledDivWrapper
-										isWrapper={true}
-										isFooter={true}
-									>
-										<StyledDivWrapper
-											isCurrent={true}
-											isFooter={true}
-										>
+								<StyledTd isFooter={true} isLast={true} key={"row_last_col_last"}>
+									<StyledDivWrapper isWrapper={true} isFooter={true}>
+										<StyledDivWrapper isCurrent={true} isFooter={true}>
 											{game.currentPhase > 0 &&
 												(() => {
-													const bets = getBets(
-														game,
-														game.currentTurn
-													);
+													const bets = getBets(game, game.currentTurn);
 													return (
 														<span
 															className={
-																bets >
-																currentTurnNumber
+																bets > currentTurnNumber
 																	? classes.betsOver
 																	: classes.betsUnder
 															}
@@ -182,15 +157,8 @@ const Game = (props) => {
 												})()}
 										</StyledDivWrapper>
 										{(isBetPhase || isTricksPhase) && (
-											<StyledDivWrapper
-												isControl={true}
-												isFooter={true}
-											>
-												<span
-													className={
-														classes.betTrickTotalLabel
-													}
-												>
+											<StyledDivWrapper isControl={true} isFooter={true}>
+												<span className={classes.betTrickTotalLabel}>
 													Total:
 												</span>
 												<span>{totalBetOrTricks}</span>
@@ -214,10 +182,7 @@ const Game = (props) => {
 						</Button>
 					) : (
 						<React.Fragment>
-							<Button
-								onClick={handleCancelGame}
-								variant="outlined"
-							>
+							<Button onClick={handleCancelGame} variant="outlined">
 								Abandonner
 							</Button>
 							<Button
@@ -250,14 +215,9 @@ const Game = (props) => {
 					onClose={handleConfirmCancelGameClose}
 					aria-labelledby="alert-dialog-title"
 				>
-					<DialogTitle id="alert-dialog-title">
-						{`Abandonner la partie?`}
-					</DialogTitle>
+					<DialogTitle id="alert-dialog-title">{`Abandonner la partie?`}</DialogTitle>
 					<DialogActions>
-						<Button
-							variant="outlined"
-							onClick={handleConfirmCancelGameDisagree}
-						>
+						<Button variant="outlined" onClick={handleConfirmCancelGameDisagree}>
 							Non
 						</Button>
 						<Button

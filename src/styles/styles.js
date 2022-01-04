@@ -255,14 +255,7 @@ export const colors = {
 };
 
 const baseProperties = {
-	fontFamily: [
-		"Lato",
-		"Arial",
-		"Roboto",
-		'"Helvetica Neue"',
-		"Arial",
-		"sans-serif",
-	].join(","),
+	fontFamily: ["Lato", "Arial", "Roboto", '"Helvetica Neue"', "Arial", "sans-serif"].join(","),
 	fontWeightLighter: 100,
 	fontWeightLight: 300,
 	fontWeightRegular: 400,

@@ -3,12 +3,7 @@ import { useCurrentGame, gameSetBet, gameSetTricks } from "store/actions";
 import { useDispatch } from "react-redux";
 import React from "react";
 import NumSelector from "./NumSelector";
-import {
-	gameTableRowsStyles,
-	StyledDivWrapper,
-	StyledTd,
-	StyledTr,
-} from "./gameTableRowsStyle";
+import { gameTableRowsStyles, StyledDivWrapper, StyledTd, StyledTr } from "./gameTableRowsStyle";
 
 const styles = gameTableRowsStyles;
 
@@ -30,8 +25,7 @@ const GameTableRows = (props) => {
 
 	const isBetPhase = game.currentPhase === 0;
 	const isTricksPhase = game.currentPhase === 2;
-	const isGameDone =
-		game.currentTurn === game.nbTurns - 1 && game.currentPhase === 3;
+	const isGameDone = game.currentTurn === game.nbTurns - 1 && game.currentPhase === 3;
 	let highScore = -1;
 	let winners = [];
 	if (isGameDone) {
@@ -69,17 +63,12 @@ const GameTableRows = (props) => {
 		const missed = confirmedTurnBet !== confirmedTurnTrick;
 
 		const cellContent = (
-			<StyledDivWrapper
-				isWinner={isWinner}
-				isCurrent={indexCol === currentTurn}
-			>
+			<StyledDivWrapper isWinner={isWinner} isCurrent={indexCol === currentTurn}>
 				<span className={classes.scoreTrickData}>
 					{(missed || (indexCol === currentTurn && !done)) && (
 						<span
 							className={
-								missed && done
-									? classes.scoreTrickBetMissed
-									: classes.scoreTrickBet
+								missed && done ? classes.scoreTrickBetMissed : classes.scoreTrickBet
 							}
 						>
 							{confirmedTurnBet}
@@ -88,22 +77,14 @@ const GameTableRows = (props) => {
 					{confirmedTurnTrick !== "" && (
 						<span
 							className={
-								missed
-									? classes.scoreTrickResultMissed
-									: classes.scoreTrickResult
+								missed ? classes.scoreTrickResultMissed : classes.scoreTrickResult
 							}
 						>
 							{confirmedTurnTrick}
 						</span>
 					)}
 				</span>
-				<span
-					className={
-						missed && done
-							? classes.scoreResultMissed
-							: classes.scoreResult
-					}
-				>
+				<span className={missed && done ? classes.scoreResultMissed : classes.scoreResult}>
 					{confirmedTurnScore}
 				</span>
 			</StyledDivWrapper>
@@ -127,9 +108,7 @@ const GameTableRows = (props) => {
 									value={currentVal}
 									min={0}
 									max={game.turnNumbers[game.currentTurn]}
-									handleUpdateQty={(bet) =>
-										handlePlayerBetChange(player, bet)
-									}
+									handleUpdateQty={(bet) => handlePlayerBetChange(player, bet)}
 								/>
 							)}
 						</StyledDivWrapper>
@@ -165,11 +144,7 @@ const GameTableRows = (props) => {
 					}
 
 					return (
-						<StyledTr
-							key={"row_" + index}
-							isEven={index % 2 === 0}
-							isWinner={isWinner}
-						>
+						<StyledTr key={"row_" + index} isEven={index % 2 === 0} isWinner={isWinner}>
 							<StyledTd
 								isFirst={true}
 								isEven={index % 2 === 0}
@@ -188,23 +163,20 @@ const GameTableRows = (props) => {
 								const isLast = i === game.currentTurn;
 								const turnBet = player.bets[i];
 								const confirmedTurnBet =
-									(game.currentPhase >= 1 &&
-										game.currentTurn >= i) ||
+									(game.currentPhase >= 1 && game.currentTurn >= i) ||
 									game.currentTurn > i
 										? turnBet
 										: "-";
 
 								const turnTrick = player.tricks[i];
 								const confirmedTurnTrick =
-									(game.currentPhase >= 3 &&
-										game.currentTurn >= i) ||
+									(game.currentPhase >= 3 && game.currentTurn >= i) ||
 									game.currentTurn > i
 										? turnTrick
 										: "";
 								const turnScore = player.scores[i];
 								const confirmedTurnScore =
-									(game.currentPhase >= 3 &&
-										game.currentTurn >= i) ||
+									(game.currentPhase >= 3 && game.currentTurn >= i) ||
 									game.currentTurn > i
 										? turnScore
 										: "...";

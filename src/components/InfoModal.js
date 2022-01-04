@@ -72,10 +72,7 @@ const InfoModal = (props) => {
 			aria-labelledby="customized-dialog-title"
 			open={openInfoModal}
 		>
-			<BootstrapDialogTitle
-				id="customized-dialog-title"
-				onClose={handleClose}
-			>
+			<BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
 				Qu'est-ce que l'Ascenseur?
 			</BootstrapDialogTitle>
 			<DialogContent dividers>
@@ -83,25 +80,21 @@ const InfoModal = (props) => {
 					On peut jouer à ce jeu en étant de quatre à six joueurs.
 				</Typography>
 				<Typography gutterBottom>
-					La personne qui distribue les cartes doit le faire dans le
-					sens des aiguilles d’une montre et donner une carte à chacun
-					des joueurs. Celui qui est à sa gauche doit distribuer deux
-					cartes de la même manière que son prédécesseur (mais une
-					carte à la fois). Après le tour ira encore à cela qui est à
-					gauche, etc. jusqu’à ce qu’il y ait un maximum de huit
-					cartes lorsqu’il y a six joueurs, dix cartes à cinq et
-					treize à quatre joueurs).
+					La personne qui distribue les cartes doit le faire dans le sens des aiguilles
+					d’une montre et donner une carte à chacun des joueurs. Celui qui est à sa gauche
+					doit distribuer deux cartes de la même manière que son prédécesseur (mais une
+					carte à la fois). Après le tour ira encore à cela qui est à gauche, etc. jusqu’à
+					ce qu’il y ait un maximum de huit cartes lorsqu’il y a six joueurs, dix cartes à
+					cinq et treize à quatre joueurs).
 				</Typography>
 				<Typography gutterBottom>
-					Praesent commodo cursus magna, vel scelerisque nisl
-					consectetur et. Vivamus sagittis lacus vel augue laoreet
-					rutrum faucibus dolor auctor.
+					Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
+					sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
 				</Typography>
 				<Typography gutterBottom>
-					Aenean lacinia bibendum nulla sed consectetur. Praesent
-					commodo cursus magna, vel scelerisque nisl consectetur et.
-					Donec sed odio dui. Donec ullamcorper nulla non metus auctor
-					fringilla.
+					Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
+					vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla
+					non metus auctor fringilla.
 				</Typography>
 			</DialogContent>
 		</BootstrapDialog>

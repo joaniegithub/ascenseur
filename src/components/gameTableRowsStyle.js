@@ -16,12 +16,7 @@ import { colors } from "styles/styles";
 // 	"#efb4cd",
 // ];
 
-const getStyledTableRowProperties = ({
-	isHeader,
-	isFooter,
-	isEven,
-	isWinner,
-}) => {
+const getStyledTableRowProperties = ({ isHeader, isFooter, isEven, isWinner }) => {
 	let bgColor = "#fff";
 	if (isHeader || isFooter) {
 		bgColor = "#eaeaea";
@@ -41,10 +36,7 @@ const getStyledTableRowProperties = ({
 	};
 };
 const shouldFowardPropTrFunction = (prop) =>
-	prop !== "isHeader" &&
-	prop !== "isFooter" &&
-	prop !== "isEven" &&
-	prop !== "isWinner";
+	prop !== "isHeader" && prop !== "isFooter" && prop !== "isEven" && prop !== "isWinner";
 export const StyledTr = styled("tr", {
 	shouldForwardProp: shouldFowardPropTrFunction,
 })(getStyledTableRowProperties);
@@ -102,11 +94,7 @@ const getStyledTableCellProperties = ({
 			fontWeight: 600,
 		}),
 
-		padding: isLast
-			? "0"
-			: isHeader || isFooter || isFirst
-			? "6px 10px"
-			: "0",
+		padding: isLast ? "0" : isHeader || isFooter || isFirst ? "6px 10px" : "0",
 		position: isFirst || isLast ? "sticky" : "relative",
 		zIndex: isFirst || isLast ? 2 : 1,
 		...(isFirst && { left: 0 }),
@@ -207,7 +195,7 @@ export const gameTableRowsStyles = () => ({
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "flex-start",
-		overflowX: "scroll",
+		overflowX: "auto",
 		width: "100%",
 		overflowY: "visible",
 		padding: 0,

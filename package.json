@@ -3,6 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "http://joaniegithub.github.io/ascenseur",
+  "keywords": [
+    "ascenseur",
+    "companion ascenseur"
+  ],
+  "main": "template.json",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joaniegithub/ascenseur",
+    "directory": "packages/joaniegithub/ascenseur"
+  },
   "dependencies": {
     "@emotion/react": "^11.7.0",
     "@emotion/styled": "^11.6.0",
