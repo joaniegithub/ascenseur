@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/ascenseur/static/css/main.f7fbe963.css",
-    "main.js": "/ascenseur/static/js/main.09b0ba3f.js",
+    "main.js": "/ascenseur/static/js/main.a8f205b8.js",
     "static/js/787.4e2e9e1c.chunk.js": "/ascenseur/static/js/787.4e2e9e1c.chunk.js",
     "service-worker.js": "/ascenseur/service-worker.js",
     "index.html": "/ascenseur/index.html",
     "main.f7fbe963.css.map": "/ascenseur/static/css/main.f7fbe963.css.map",
-    "main.09b0ba3f.js.map": "/ascenseur/static/js/main.09b0ba3f.js.map",
+    "main.a8f205b8.js.map": "/ascenseur/static/js/main.a8f205b8.js.map",
     "787.4e2e9e1c.chunk.js.map": "/ascenseur/static/js/787.4e2e9e1c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f7fbe963.css",
-    "static/js/main.09b0ba3f.js"
+    "static/js/main.a8f205b8.js"
   ]
 }
