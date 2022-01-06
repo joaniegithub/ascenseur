@@ -14,6 +14,7 @@ const gameDefaultState = {
 	nbTurns: -1,
 	turnNumbers: [],
 	nbCards: 52,
+	overrideMode: false,
 };
 
 const reducer = (state = defaultState, { type, ...payload }) => {
@@ -25,12 +26,6 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 			return {
 				...state,
 				settings: { ...state.settings, ...payload.settings },
-			};
-
-		case constants.SET_STEP:
-			return {
-				...state,
-				step: payload.step,
 			};
 
 		case constants.NEW_GAME:
@@ -103,6 +98,35 @@ const reducer = (state = defaultState, { type, ...payload }) => {
 				currentGame: {
 					...game,
 					dealer: payload.playerUid,
+				},
+			};
+
+		case constants.CHANGE_OVERRIDE_MODE:
+			return {
+				...state,
+				currentGame: {
+					...game,
+					overrideMode: !game.overrideMode,
+					overrideTurn: game.currentTurn,
+					overridePhase: game.currentPhase,
+				},
+			};
+		case constants.OVERRIDE_CURRENT_TURN:
+			const newState = {
+				...state,
+				currentGame: {
+					...game,
+					currentTurn: payload.turn,
+				},
+			};
+			console.log(newState.currentGame);
+			return newState;
+		case constants.OVERRIDE_CURRENT_PHASE:
+			return {
+				...state,
+				currentGame: {
+					...game,
+					currentPhase: payload.phase,
 				},
 			};
 

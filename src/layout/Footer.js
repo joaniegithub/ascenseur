@@ -18,7 +18,7 @@ const styles = () => ({
 	footerCopyright: {
 		display: "block",
 		fontSize: "12px",
-		lineHeight: "24px",
+		lineHeight: "20px",
 		width: "100%",
 		textAlign: "right",
 		margin: "0",

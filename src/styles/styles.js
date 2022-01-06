@@ -1,3 +1,18 @@
+// export const colors = [
+// 	"#005d5d",
+// 	"#FF7043",
+// 	"#33b1ff",
+// 	"#EC407A",
+// 	"#f6c85f",
+// 	"#46d39a",
+// 	"#8b6ec3",
+// 	"#a6d177",
+// 	"#78909C",
+// 	"#dd0000",
+// 	"#004cab",
+// 	"#efb4cd",
+// ];
+
 export const mainPadding = {
 	paddingLeft: "12px",
 	paddingRight: "12px",
@@ -39,8 +54,8 @@ export const colors = {
 	},
 
 	primary: {
-		main: "#25a9b5",
-		focus: "#157b85",
+		main: "#157b85",
+		focus: "#045b62",
 	},
 
 	secondary: {
@@ -49,8 +64,8 @@ export const colors = {
 	},
 
 	info: {
-		main: "#25a9b5",
-		focus: "#177f89",
+		main: "#157b85",
+		focus: "#045b62",
 	},
 
 	success: {

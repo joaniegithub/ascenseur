@@ -1,21 +1,6 @@
 import { styled } from "@mui/system";
 import { colors } from "styles/styles";
 
-// export const colors = [
-// 	"#005d5d",
-// 	"#FF7043",
-// 	"#33b1ff",
-// 	"#EC407A",
-// 	"#f6c85f",
-// 	"#46d39a",
-// 	"#8b6ec3",
-// 	"#a6d177",
-// 	"#78909C",
-// 	"#dd0000",
-// 	"#004cab",
-// 	"#efb4cd",
-// ];
-
 const getStyledTableRowProperties = ({ isHeader, isFooter, isEven, isWinner }) => {
 	let bgColor = "#fff";
 	if (isHeader || isFooter) {
@@ -185,7 +170,7 @@ export const StyledDivWrapper = styled("div", {
 export const gameTableRowsStyles = () => ({
 	gameContainer: {
 		width: "100%",
-		padding: "0 0 12px 0",
+		padding: "0",
 	},
 	gameInfo: {
 		margin: "0 12px 6px",

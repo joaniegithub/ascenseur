@@ -199,7 +199,7 @@ const Game = (props) => {
 								onClick={handleNext}
 							>
 								{isBetPhase
-									? "Confirmer les paris"
+									? "Confirmer les contrats"
 									: isPostBetPhase
 									? "Passer au décompte"
 									: isTricksPhase

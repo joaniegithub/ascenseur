@@ -19,13 +19,6 @@ export const useCurrentGame = () => {
 // 	};
 // };
 
-export const setStep = (_step) => {
-	return {
-		type: constants.SET_STEP,
-		step: _step,
-	};
-};
-
 export const newGame = () => {
 	return {
 		type: constants.NEW_GAME,
@@ -63,6 +56,24 @@ export const chooseDealer = (_playerUid) => {
 	return {
 		type: constants.SET_DEALER,
 		playerUid: _playerUid,
+	};
+};
+
+export const changeOverrideMode = () => {
+	return {
+		type: constants.CHANGE_OVERRIDE_MODE,
+	};
+};
+export const overrideCurrentTurn = (_turn) => {
+	return {
+		type: constants.OVERRIDE_CURRENT_TURN,
+		turn: _turn,
+	};
+};
+export const overrideCurrentPhase = (_phase) => {
+	return {
+		type: constants.OVERRIDE_CURRENT_PHASE,
+		phase: _phase,
 	};
 };
 export const startGame = () => {

@@ -1,4 +1,69 @@
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Shadows+Into+Light&display=swap");
+
+@font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./styles/fonts/Lato-Thin.ttf) format('truetype');
+	font-weight: 200;
+	font-style: normal;
+}
+@font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./styles/fonts/Lato-ThinItalic.ttf) format('truetype');
+	font-weight: 200;
+	font-style: italic;
+}
+@font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./styles/fonts/Lato-Light.ttf) format('truetype');
+	font-weight: 300;
+	font-style: normal;
+}
+@font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./styles/fonts/Lato-LightItalic.ttf) format('truetype');
+	font-weight: 300;
+	font-style: italic;
+}
+@font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./styles/fonts/Lato-Regular.ttf) format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./styles/fonts/Lato-Italic.ttf) format('truetype');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./styles/fonts/Lato-Bold.ttf) format('truetype');
+	font-weight: 600;
+	font-style: normal;
+}
+@font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./styles/fonts/Lato-BoldItalic.ttf) format('truetype');
+	font-weight: 600;
+	font-style: italic;
+}
+@font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./styles/fonts/Lato-Black.ttf) format('truetype');
+	font-weight: 900;
+	font-style: normal;
+}
+@font-face {
+    font-family: 'Lato';
+    src: local('Lato'), url(./styles/fonts/Lato-BlackItalic.ttf) format('truetype');
+	font-weight: 900;
+	font-style: italic;
+}
+
+@font-face {
+    font-family: 'Staatliches';
+    src: local('Staatliches'), url(./styles/fonts/Staatliches-Regular.ttf) format('truetype');
+}
 
 html, body, div, span, applet, object, iframe, 
 p, blockquote, pre,
@@ -67,8 +132,22 @@ div#root {
 	height: 100%;
 	overflow: auto;
 }
-div.main {
-	min-height: 100%;
+@media (min-width: 901px) {
+	body {
+		background-color: #deebec;
+	}
+	div#root {
+		height: 100%;
+		overflow: auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+@media (max-width: 900px) {
+	div.main {
+		min-height: 100%;
+	}
 }
 
 code {

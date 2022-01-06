@@ -9,7 +9,7 @@ import InfoModal from "components/InfoModal";
 
 const styles = () => ({
 	box: {
-		padding: "16px 0",
+		padding: "14px 0",
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "flex-start",

@@ -33,6 +33,7 @@ const styles = () => ({
 		minHeight: "100%",
 		display: "flex !important",
 		flexDirection: "column",
+		border: "#ddd 1px solid",
 	},
 	main: {
 		// margin: "0 16px",
