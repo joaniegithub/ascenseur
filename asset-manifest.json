@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ascenseur/static/css/main.53e1c1e9.css",
-    "main.js": "/ascenseur/static/js/main.b8ff977e.js",
+    "main.js": "/ascenseur/static/js/main.f70548f6.js",
     "static/js/787.4e2e9e1c.chunk.js": "/ascenseur/static/js/787.4e2e9e1c.chunk.js",
     "static/media/Lato-BoldItalic.ttf": "/ascenseur/static/media/Lato-BoldItalic.4113fd37d3dbdde71570.ttf",
     "static/media/Lato-Light.ttf": "/ascenseur/static/media/Lato-Light.bfc37ff1d5543ecd4ec6.ttf",
@@ -17,11 +17,11 @@
     "static/media/Lato-ThinItalic.ttf": "/ascenseur/static/media/Lato-ThinItalic.c47d267d1b0232d5fe9b.ttf",
     "index.html": "/ascenseur/index.html",
     "main.53e1c1e9.css.map": "/ascenseur/static/css/main.53e1c1e9.css.map",
-    "main.b8ff977e.js.map": "/ascenseur/static/js/main.b8ff977e.js.map",
+    "main.f70548f6.js.map": "/ascenseur/static/js/main.f70548f6.js.map",
     "787.4e2e9e1c.chunk.js.map": "/ascenseur/static/js/787.4e2e9e1c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.53e1c1e9.css",
-    "static/js/main.b8ff977e.js"
+    "static/js/main.f70548f6.js"
   ]
 }
