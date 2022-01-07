@@ -1,6 +1,6 @@
 {
 	"short_name": "Ascenseur",
-	"name": "Ascenseur Companion",
+	"name": "Ascenseur Compagnon",
 	"start_url": "./index.html",
 	"scope": ".",
 	"display": "standalone",
