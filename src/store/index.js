@@ -19,6 +19,7 @@ function loadFromLocalStorage() {
 		const serialisedState = localStorage.getItem("AscenseurStore");
 		if (serialisedState === null) return undefined;
 		const parsedState = JSON.parse(serialisedState);
+		parsedState.showRules = false;
 		return parsedState;
 	} catch (e) {
 		console.warn(e);

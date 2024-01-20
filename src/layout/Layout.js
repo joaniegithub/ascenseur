@@ -24,7 +24,7 @@ const images = [
 	"trees",
 ];
 
-const styles = () => ({
+const styles = (theme) => ({
 	container: {
 		backgroundColor: "#fff",
 		margin: "0",
@@ -33,8 +33,16 @@ const styles = () => ({
 		minHeight: "100%",
 		display: "flex !important",
 		flexDirection: "column",
-		border: "#ddd 1px solid",
+		"@media (min-width: 901px)": {
+			border: "#ddd 1px solid",
+			minHeight: "initial",
+		},
 	},
+	// ["@media (mmin-width: 900px)"]: {
+	// 	// eslint-disable-line no-useless-computed-key
+	// 	minHeight: "initial",
+	// },
+
 	main: {
 		// margin: "0 16px",
 		flexGrow: 1,
@@ -42,11 +50,11 @@ const styles = () => ({
 });
 
 const Layout = (props) => {
-	const { classes } = props;
+	const { classes, deferredPrompt } = props;
 
 	return (
 		<Container className={classes.container} maxWidth="md">
-			<Header images={images} />
+			<Header images={images} deferredPrompt={deferredPrompt} />
 			<div className={classes.main}>{props.children}</div>
 			<Footer />
 		</Container>

@@ -7,6 +7,8 @@ import LockIcon from "@mui/icons-material/Lock";
 import { useCurrentGame, changeOverrideMode } from "store/actions";
 import { useDispatch } from "react-redux";
 import IconButton from "@mui/material/IconButton";
+import InstallMobileIcon from "@mui/icons-material/InstallMobile";
+import InstallDesktopIcon from "@mui/icons-material/InstallDesktop";
 
 const styles = () => ({
 	header: {
@@ -32,12 +34,34 @@ const styles = () => ({
 });
 
 const Header = (props) => {
-	const { classes } = props;
+	const { classes, deferredPrompt } = props;
 	const game = useCurrentGame();
 	const dispatch = useDispatch();
 
+	const [showInstallButton, setShowInstallButton] = React.useState(true);
+
 	const handleClickLock = () => {
 		dispatch(changeOverrideMode());
+	};
+
+	const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+		navigator.userAgent
+	);
+
+	// Installation must be done by a user gesture! Here, the button click
+	const handleClickInstall = (e) => {
+		// hide our user interface that shows our A2HS button
+		// Show the prompt
+		deferredPrompt.prompt();
+		// Wait for the user to respond to the prompt
+		deferredPrompt.userChoice.then((choiceResult) => {
+			if (choiceResult.outcome === "accepted") {
+				console.log("User accepted the A2HS prompt");
+				setShowInstallButton(false);
+			} else {
+				console.log("User dismissed the A2HS prompt");
+			}
+		});
 	};
 
 	return (
@@ -50,19 +74,36 @@ const Header = (props) => {
 						marginRight: "4px",
 					}}
 				/>
-				Ascenseur Companion
+				Ascenseur Compagnon
 			</h1>
 
-			<IconButton
-				aria-label="close"
-				onClick={handleClickLock}
-				size="small"
-				sx={{
-					color: colors.primary.focus,
-				}}
-			>
-				{game.overrideMode ? <LockOpenIcon /> : <LockIcon />}
-			</IconButton>
+			<div>
+				{game && (
+					<IconButton
+						aria-label="close"
+						onClick={handleClickLock}
+						size="small"
+						sx={{
+							color: "#ccc",
+						}}
+					>
+						{game.overrideMode ? <LockOpenIcon /> : <LockIcon />}
+					</IconButton>
+				)}
+
+				{deferredPrompt && showInstallButton && (
+					<IconButton
+						aria-label="close"
+						onClick={handleClickInstall}
+						size="small"
+						sx={{
+							color: "#ccc",
+						}}
+					>
+						{isMobile ? <InstallMobileIcon /> : <InstallDesktopIcon />}
+					</IconButton>
+				)}
+			</div>
 
 			{/*<div className={classes.bgSwitcherContainer}>
 				<IconButton onClick={handlePreviousBg}>

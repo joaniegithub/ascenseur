@@ -76,25 +76,36 @@ const InfoModal = (props) => {
 				Qu'est-ce que l'Ascenseur?
 			</BootstrapDialogTitle>
 			<DialogContent dividers>
-				<Typography gutterBottom>
-					On peut jouer à ce jeu en étant de quatre à six joueurs.
+				<Typography gutterBottom paragraph>
+					Se joue de 4 à 6 joueurs avec un jeu de cinquante-deux cartes selon les
+					spécifications suivantes : à cinq joueurs, deux 2 sont retirés ; à six joueurs
+					on retire tous les 2.
 				</Typography>
-				<Typography gutterBottom>
-					La personne qui distribue les cartes doit le faire dans le sens des aiguilles
-					d’une montre et donner une carte à chacun des joueurs. Celui qui est à sa gauche
-					doit distribuer deux cartes de la même manière que son prédécesseur (mais une
-					carte à la fois). Après le tour ira encore à cela qui est à gauche, etc. jusqu’à
-					ce qu’il y ait un maximum de huit cartes lorsqu’il y a six joueurs, dix cartes à
-					cinq et treize à quatre joueurs).
+				<Typography gutterBottom paragraph>
+					Le jeu consiste en une série de manches se jouant avec un nombre de cartes en
+					main d'abord croissant puis ensuite décroissant. Le premier tour se joue à une
+					carte, le second à deux cartes, le troisième à trois cartes, et ainsi de suite,
+					jusqu'à ce qu'à une manche où toutes les cartes sont distribuées. À partir du
+					tour suivant, on passe au mode de distribution décroissante.
 				</Typography>
-				<Typography gutterBottom>
-					Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus
-					sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+				<Typography gutterBottom paragraph>
+					Chaque manche consiste en 4 phases: la distribution des cartes, l'annonce du
+					contrat, la joute, le décompte.
 				</Typography>
-				<Typography gutterBottom>
-					Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
-					vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla
-					non metus auctor fringilla.
+				<Typography gutterBottom paragraph>
+					<strong>1. La distribution des cartes:</strong>
+					Le donneur distribue <em>n</em> cartes (varie en fonction du numéro de manche
+					auquel on est rendu) à chaque joueur. Il place le talon au centre, retourne la
+					carte du dessus face visible qui désignera la couleur de l'atout.
+				</Typography>
+				<Typography gutterBottom paragraph>
+					<strong>2. L'annonce du contrat:</strong> En commençant par le jouer suivant le
+					donneur, chaque joueur annonce le nombre de levées qu'il pense remporter durant
+					cette manche. Le nombre annoncé par chacun ne doit pas dépasser le nombre de
+					levées à remporter durant la manche (c'est-à-dire le nombre de cartes que chaque
+					joueur a en main) et la somme des nombres annoncés par chacun ne doit pas
+					totaliser exactement le nombre de levées (sinon il y aurait possibilité que tous
+					les joueurs soient gagnants et le jeu ne souhaite pas celà).
 				</Typography>
 			</DialogContent>
 		</BootstrapDialog>

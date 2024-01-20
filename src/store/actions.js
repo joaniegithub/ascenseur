@@ -11,6 +11,11 @@ export const useCurrentGame = () => {
 		return state.currentGame;
 	});
 };
+export const useShowRules = () => {
+	return useSelector((state) => {
+		return state.showRules;
+	});
+};
 
 // export const editSettings = (_settingsData) => {
 // 	return {
@@ -98,5 +103,11 @@ export const gameSetTricks = (_player, _tricks) => {
 		type: constants.GAME_SET_TRICKS,
 		player: _player,
 		tricks: _tricks,
+	};
+};
+export const openRules = (_visibility) => {
+	return {
+		type: constants.SHOW_RULES,
+		visibility: _visibility,
 	};
 };

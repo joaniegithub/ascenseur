@@ -161,7 +161,17 @@ const Game = (props) => {
 												<span className={classes.betTrickTotalLabel}>
 													Total:
 												</span>
-												<span>{totalBetOrTricks}</span>
+												<span
+													className={
+														totalBetOrTricks > currentTurnNumber
+															? classes.betTrickTotalLabelOver
+															: totalBetOrTricks < currentTurnNumber
+															? classes.betTrickTotalLabelUnder
+															: classes.betTrickTotalLabel
+													}
+												>
+													{totalBetOrTricks}
+												</span>
 											</StyledDivWrapper>
 										)}
 									</StyledDivWrapper>

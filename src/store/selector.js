@@ -4,7 +4,7 @@ export const getGameCanGoNext = (game) => {
 		let total = 0;
 		const bets = game.players.find((player) => {
 			if (player.bets[game.currentTurn] !== undefined) {
-				console.log(player.name, player.bets[game.currentTurn]);
+				// console.log(player.name, player.bets[game.currentTurn]);
 				total += player.bets[game.currentTurn];
 				return false;
 			}
@@ -20,7 +20,7 @@ export const getGameCanGoNext = (game) => {
 		let total = 0;
 		const tricks = game.players.find((player) => {
 			if (player.tricks[game.currentTurn] !== undefined) {
-				console.log(player.name, player.tricks[game.currentTurn]);
+				// console.log(player.name, player.tricks[game.currentTurn]);
 				total += player.tricks[game.currentTurn];
 				return false;
 			}

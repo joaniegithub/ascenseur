@@ -5,7 +5,13 @@
   "homepage": "http://joaniegithub.github.io/ascenseur",
   "keywords": [
     "ascenseur",
-    "companion ascenseur"
+    "compagnon",
+    "jeu",
+    "cartes",
+    "elevator",
+    "companion",
+    "cards",
+    "game"
   ],
   "main": "template.json",
   "repository": {

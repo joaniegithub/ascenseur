@@ -12,7 +12,7 @@ const styles = () => ({
 		height: "100%",
 	},
 	labelValue: {
-		fontWeight: "bold",
+		fontWeight: 600,
 		margin: "0",
 		width: "24px",
 		display: "block",

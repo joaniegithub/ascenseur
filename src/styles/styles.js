@@ -24,7 +24,7 @@ export const secondTitle = {
 	fontFamily: "Lato",
 	fontSize: "18px",
 	lineHeight: "24px",
-	fontWeight: "bold",
+	fontWeight: 600,
 	margin: 0,
 };
 
@@ -54,18 +54,18 @@ export const colors = {
 	},
 
 	primary: {
-		main: "#157b85",
-		focus: "#045b62",
+		main: "#2f6488",
+		focus: "#143d59",
 	},
 
 	secondary: {
-		main: "#92cdd3",
-		focus: "#92cdd3",
+		main: "#6d9bbb",
+		focus: "#6d9bbb",
 	},
 
 	info: {
-		main: "#157b85",
-		focus: "#045b62",
+		main: "#2f6488",
+		focus: "#143d59",
 	},
 
 	success: {

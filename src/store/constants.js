@@ -15,5 +15,7 @@ export const GAME_NEXT = "GAME_NEXT";
 export const GAME_SET_BET = "GAME_SET_BET";
 export const GAME_SET_TRICKS = "GAME_SET_TRICKS";
 
+export const SHOW_RULES = "SHOW_RULES";
+
 export const ONE_WAY = 1;
 export const TWO_WAYS = 2;

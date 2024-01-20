@@ -20,7 +20,6 @@ import React from "react";
 import NewPlayerModal from "components/NewPlayerModal";
 import { secondTitle } from "styles/styles";
 import FormLabel from "@mui/material/FormLabel";
-import FormControlUnstyled from "@mui/base/FormControlUnstyled";
 import { ONE_WAY, TWO_WAYS } from "store/constants";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
@@ -32,7 +31,6 @@ import HelpIcon from "@mui/icons-material/Help";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
 
 const containerBorder = {
 	borderTop: "#ddd 1px solid",
@@ -51,8 +49,7 @@ const styles = () => ({
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "center",
-		borderTop: "#ddd 1px solid",
-		paddingTop: "16px",
+		padding: "16px 0",
 	},
 	secondTitle: { ...secondTitle },
 	wrapper: {
@@ -140,7 +137,7 @@ const styles = () => ({
 		justifyContent: "flex-start",
 	},
 	toggleButton: {
-		fontWeight: "bold",
+		fontWeight: 600,
 		"> span": {
 			padding: "6px",
 		},
@@ -198,10 +195,6 @@ const NewGame = (props) => {
 		if (_playerName) {
 			dispatch(addPlayer(_playerName));
 		}
-	};
-	// Modal Info
-	const handleClickInfo = () => {
-		onClickInfo();
 	};
 
 	// const settings = useSettings();
